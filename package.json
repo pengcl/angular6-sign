@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "sudo ng serve --disable-host-check --proxy-config proxy.conf.json --port 80",
+    "build": "ng build --prod --aot --build-optimizer",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -20,7 +20,9 @@
     "@angular/platform-browser": "^6.0.3",
     "@angular/platform-browser-dynamic": "^6.0.3",
     "@angular/router": "^6.0.3",
+    "cookie-parser": "^1.4.3",
     "core-js": "^2.5.4",
+    "morgan": "^1.9.0",
     "rxjs": "^6.0.0",
     "zone.js": "^0.8.26"
   },
@@ -43,6 +45,13 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.3.0",
     "ts-node": "~5.0.1",
-    "tslint": "~5.9.1"
+    "tslint": "~5.9.1",
+    "express": "~4.15.2",
+    "fs": "0.0.1-security",
+    "hbs": "~4.0.1",
+    "mongodb": "^2.2.33",
+    "mongoose": "^4.13.7",
+    "serve-favicon": "~2.4.2",
+    "q": "^1.5.1"
   }
 }

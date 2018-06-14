@@ -1,16 +1,39 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule, ErrorHandler} from '@angular/core';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
-import { AppComponent } from './app.component';
+import {AppRoutingModule} from './app-routing.module';
+
+// pipes
+import {PIPES_DECLARATIONS} from './pipes';
+
+// directives
+import {DIRECTIVES_DECLARATIONS} from './directives';
+
+import {AppComponent} from './app.component';
+import {IndexComponent} from './pages/index/index.component';
+import {AppErrorComponent} from './class/error.class';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    IndexComponent,
+    ...PIPES_DECLARATIONS,
+    ...DIRECTIVES_DECLARATIONS
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    ...PIPES_DECLARATIONS,
+    {provide: ErrorHandler, useClass: AppErrorComponent}
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

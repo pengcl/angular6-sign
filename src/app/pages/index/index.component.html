@@ -1,0 +1,8 @@
+<div *ngFor="let country of group | keys">
+  <div>{{country.key}}</div>
+  <ul>
+    <li (click)="setCountry(item)" *ngFor="let item of country.value">
+      <span>{{item.country}}</span>
+    </li>
+  </ul>
+</div>
