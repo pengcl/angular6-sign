@@ -24,6 +24,7 @@ utils.sign = function (body, timeStamp) {
 
   //待加密字符串（顺序必须一致，大小写必须相同）
   var encryptString = "{publicKey:" + PublicKey + ",timeStamp:" + timeStamp + ",data:" + jsonData + ",privateKey:" + privateKey + "}";
+  console.log(encryptString);
   //生成[签名字符串](使用MD516位加密)
   sign = MD5EncryptTo16(encryptString).toUpperCase();
   return sign;

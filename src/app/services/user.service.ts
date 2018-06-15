@@ -10,10 +10,19 @@ import {StorageService} from './storage.service';
 export class UserService {
   private user;
 
-  constructor(private storage: StorageService,
+  constructor(private storageSvc: StorageService,
               private activatedRoute: ActivatedRoute,
               private router: Router,
               private http: HttpClient) {
+  }
+
+  getUser() {
+    const user = this.storageSvc.get('user');
+    if (!user) {
+      this.router.navigate(['index']);
+    } else {
+      return user;
+    }
   }
 
   getTicket(CallbackUrl) {

@@ -12,6 +12,7 @@ var wxApi = require('./routes/wxApi');*/
 var auth = require('./routes/mc/auth');
 var countries = require('./routes/countries');
 var votes = require('./routes/votes');
+var activities = require('./routes/activities');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use('/wxApi', wxApi);*/
 app.use('/mc/auth', auth);
 app.use('/countries', countries);
 app.use('/votes', votes);
+app.use('/activities', activities);
 
 
 // catch 404 and forward to error handler

@@ -13,12 +13,14 @@ import {DIRECTIVES_DECLARATIONS} from './directives';
 
 import {AppComponent} from './app.component';
 import {IndexComponent} from './pages/index/index.component';
+import {LotteryComponent} from './pages/lottery/lottery.component';
 import {AppErrorComponent} from './class/error.class';
 
 @NgModule({
   declarations: [
     AppComponent,
     IndexComponent,
+    LotteryComponent,
     ...PIPES_DECLARATIONS,
     ...DIRECTIVES_DECLARATIONS
   ],

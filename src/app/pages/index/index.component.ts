@@ -6,6 +6,7 @@ import {Config} from '../../config';
 import {UserService} from '../../services/user.service';
 import {CountriesService} from '../../services/countries.service';
 import {VoteService} from '../../services/vote.service';
+import {StorageService} from '../../services/storage.service';
 
 @Component({
   selector: 'app-index',
@@ -22,13 +23,13 @@ export class IndexComponent implements OnInit, OnDestroy {
   group;
 
   constructor(private route: ActivatedRoute,
+              private storageSvc: StorageService,
               private userSvc: UserService,
               private countriesSvc: CountriesService,
               private voteSvc: VoteService) {
   }
 
   ngOnInit() {
-    console.log('index');
 
     this.voteForm = new FormGroup({
       owner: new FormControl('', [Validators.required]),
@@ -54,6 +55,7 @@ export class IndexComponent implements OnInit, OnDestroy {
         console.log(res);
         if (res.body.Code === 1) {
           this.user = res.body.Data.OpenUserId;
+          this.storageSvc.set('user', this.user);
           this.voteForm.get('owner').setValue(this.user);
           this.voteForm.get('nickName').setValue(res.body.Data.NickName);
           this.voteForm.get('avatar').setValue(res.body.Data.Avatar);
