@@ -1,0 +1,71 @@
+.groups {
+  font-size: 0.12rem;
+  background: #24a950;
+  overflow: hidden;
+  .banner {
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+  .group-list {
+    margin-top: -0.4rem;
+  }
+  .group {
+    margin: 0.4rem 0.15rem;
+    background: #fff;
+    border-radius: 0.1rem;
+    padding: 0.4rem 0.1rem 0.1rem;
+    position: relative;
+    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+    .group-name {
+      font-size: 0.18rem;
+      text-align: center;
+      border-radius: 0.2rem;
+      line-height: 0.4rem;
+      height: 0.4rem;
+      color: #fff;
+      background: #1e429b;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate3d(-50%, -40%, 0);
+      border: 1px solid #fff;
+      overflow: hidden;
+      .label {
+        padding: 0 0.15rem;
+      }
+      .value {
+        background: #ee2b24;
+        padding: 0 0.15rem;
+      }
+    }
+
+    .flag {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+    .weui-grid__label {
+      font-size: 0.12rem;
+      color: #1e429b;
+      margin: 0.1rem 0;
+    }
+    .weui-icon-success {
+      color: #ccc;
+    }
+
+    .selected {
+      .weui-icon-success {
+        color: #ee2b24;
+      }
+    }
+  }
+
+  .weui-btn-area {
+    margin: 0.4rem 0.15rem 0.3rem;
+    .weui-btn_primary {
+      background: #329df4;
+      box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
+    }
+  }
+}

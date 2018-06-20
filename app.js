@@ -16,7 +16,7 @@ var activities = require('./routes/activities');
 
 var app = express();
 
-mongoose.connect('mongodb://worldCup:pengcl19821025@101.200.72.54:27017/worldCup', {});
+mongoose.connect('mongodb://worldCup:Pengcl19821025@101.200.72.54:27017/worldCup', {});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

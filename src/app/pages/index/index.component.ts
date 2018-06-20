@@ -13,7 +13,7 @@ import {StorageService} from '../../services/storage.service';
   templateUrl: './index.component.html',
   styleUrls: ['./index.component.scss']
 })
-export class IndexComponent implements OnInit, OnDestroy {
+export class IndexComponent implements OnInit {
 
   ticket;
   user;
@@ -21,6 +21,16 @@ export class IndexComponent implements OnInit, OnDestroy {
   voteForm: FormGroup;
 
   group;
+  _vote = {
+    A: ['', ''],
+    B: ['', ''],
+    C: ['', ''],
+    D: ['', ''],
+    E: ['', ''],
+    F: ['', ''],
+    G: ['', ''],
+    H: ['', '']
+  };
 
   constructor(private route: ActivatedRoute,
               private storageSvc: StorageService,
@@ -36,14 +46,14 @@ export class IndexComponent implements OnInit, OnDestroy {
       nickName: new FormControl('', [Validators.required]),
       avatar: new FormControl('', [Validators.required]),
       vote: new FormGroup({
-        A: new FormControl('', [Validators.required]),
-        B: new FormControl('', [Validators.required]),
-        C: new FormControl('', [Validators.required]),
-        D: new FormControl('', [Validators.required]),
-        E: new FormControl('', [Validators.required]),
-        F: new FormControl('', [Validators.required]),
-        G: new FormControl('', [Validators.required]),
-        H: new FormControl('', [Validators.required]),
+        A: new FormControl('', [Validators.required, Validators.maxLength(2)]),
+        B: new FormControl('', [Validators.required, Validators.maxLength(2)]),
+        C: new FormControl('', [Validators.required, Validators.maxLength(2)]),
+        D: new FormControl('', [Validators.required, Validators.maxLength(2)]),
+        E: new FormControl('', [Validators.required, Validators.maxLength(2)]),
+        F: new FormControl('', [Validators.required, Validators.maxLength(2)]),
+        G: new FormControl('', [Validators.required, Validators.maxLength(2)]),
+        H: new FormControl('', [Validators.required, Validators.maxLength(2)]),
       })
     });
 
@@ -61,21 +71,10 @@ export class IndexComponent implements OnInit, OnDestroy {
           this.voteForm.get('avatar').setValue(res.body.Data.Avatar);
 
           this.voteSvc.find(this.user).then(vote => {
-            console.log(vote);
             if (vote) {
               this.vote = vote;
             }
           });
-
-          /*this.audioSvc.find(this.user).then(res => {
-            if (res) {
-              this.audioReady = true;
-              this.uploaded = true;
-              this.onShow(2);
-              const that = this;
-              this.serverId = res.serverId;
-            }
-          });*/
 
         } else {
           console.log('ticket过期');
@@ -86,14 +85,7 @@ export class IndexComponent implements OnInit, OnDestroy {
 
     this.countriesSvc.find().then(res => {
       const group = {};
-      const arr = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
-      res.slice(0, 8).forEach((item, i) => {
-        // mock vote start
 
-        this.voteForm.get('vote').get(arr[i]).setValue(item._id + ':' + item.country);
-
-        // mock vote end
-      });
       res.forEach(item => {
         if (group[item.group]) {
           group[item.group].push(item);
@@ -103,19 +95,42 @@ export class IndexComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.voteSvc.vote(this.voteForm.value).then(result => {
+      /*this.voteSvc.vote(this.voteForm.value).then(result => {
         console.log(result);
-      });
+      });*/
 
       this.group = group;
     });
   }
 
   setCountry(country) {
-    console.log(country);
-  }
+    const group = this.voteForm.get('vote').get(country.group).value.split(',');
+    if (group.length < 2) {
+      group.push(country._id);
+    } else {
+      group.unshift(country._id);
+      group.pop();
+    }
 
-  ngOnDestroy() {
+    let value = '';
+    group.forEach(item => {
+      if (value) {
+        value = value + ',' + item;
+      } else {
+        value = item;
+      }
+    });
+
+    this.voteForm.get('vote').get(country.group).setValue(value);
+
+    const values = this.voteForm.get('vote').value;
+    let _length = 0;
+    for (const item in values) {
+      if (item) {
+        _length = _length + values[item].split(',').length;
+      }
+    }
+    console.log(_length);
   }
 
 }

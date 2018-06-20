@@ -1,0 +1,15 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~ngx-weui/index.min.css";
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.weui-mask {
+  background: rgba(0, 0, 0, 0.85);
+}

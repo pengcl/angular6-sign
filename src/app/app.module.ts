@@ -11,15 +11,21 @@ import {PIPES_DECLARATIONS} from './pipes';
 // directives
 import {DIRECTIVES_DECLARATIONS} from './directives';
 
+import {WeUiModule} from 'ngx-weui';
+
 import {AppComponent} from './app.component';
+import {StartComponent} from './pages/start/start.component';
 import {IndexComponent} from './pages/index/index.component';
+import {RuleComponent} from './pages/rule/rule.component';
 import {LotteryComponent} from './pages/lottery/lottery.component';
 import {AppErrorComponent} from './class/error.class';
 
 @NgModule({
   declarations: [
     AppComponent,
+    StartComponent,
     IndexComponent,
+    RuleComponent,
     LotteryComponent,
     ...PIPES_DECLARATIONS,
     ...DIRECTIVES_DECLARATIONS
@@ -30,6 +36,7 @@ import {AppErrorComponent} from './class/error.class';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
+    WeUiModule.forRoot()
   ],
   providers: [
     ...PIPES_DECLARATIONS,

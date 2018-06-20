@@ -4,7 +4,7 @@ var request = require('request');
 var mongoose = require('mongoose');
 var Countries = require('../utils/db/modules/countries');//导入模型数据模块
 
-/*router.get('/init', function (req, res, next) {
+router.get('/init', function (req, res, next) {
   _countries.forEach((item, i) => {
     const country = new Countries(item);
     country.save((err, country) => {
@@ -15,7 +15,7 @@ var Countries = require('../utils/db/modules/countries');//导入模型数据模
       }
     });
   });
-});*/
+});
 
 router.get('/find', function (req, res, next) {
   Countries.findAll().then(data => {

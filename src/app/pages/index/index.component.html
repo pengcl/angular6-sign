@@ -1,8 +1,30 @@
-<div *ngFor="let country of group | keys">
-  <div>{{country.key}}</div>
-  <ul>
-    <li (click)="setCountry(item)" *ngFor="let item of country.value">
-      <span>{{item.country}}</span>
-    </li>
-  </ul>
+<div class="groups">
+  <div class="banner">
+    <img src="/assets/images/index/banner.jpg">
+  </div>
+  <div class="group-list">
+    <div class="group" *ngFor="let country of group | keys">
+      <div class="group-name">
+        <div class="weui-flex">
+          <div class="label weui-flex__item">GROUP</div>
+          <div class="value weui-flex__item">{{country.key}}</div>
+        </div>
+      </div>
+      <div class="weui-flex">
+        <div (click)="setCountry(item)" [ngClass]="{'selected':voteForm.get('vote').get(country.key).value.indexOf(item._id) !== -1}" *ngFor="let item of country.value" class="weui-flex__item">
+          <div class="flag weui-grid__icon">
+            <img src="/assets/images/flags/{{country.key}}/{{item.flag}}.png" alt="">
+          </div>
+          <p class="weui-grid__label">{{item.country}}</p>
+          <div class="check-box weui-grid__icon">
+            <i class="weui-icon-success"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="weui-btn-area">
+    <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">我要提交</a>
+  </div>
 </div>
