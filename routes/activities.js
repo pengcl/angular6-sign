@@ -3,6 +3,7 @@ var router = express.Router();
 var request = require('request');
 
 var utils = require('../utils/utils');
+var Votes = require('../utils/db/modules/votes');
 
 /*var mongoose = require('mongoose');
 var Users = require('../../utils/db/modules/users');//导入模型数据模块
@@ -50,6 +51,7 @@ router.get('/getActivities', function (req, res, next) {
 });
 
 router.route('/plus').post(function (req, res, next) {
+  req.body.Reason = encodeURI(req.body.Reason);
   console.log(req.body);
   const url = "https://openapi10.mallcoo.cn/User/Score/v1/Plus/ByOpenUserID/";
   const timeStamp = generateTimeReqestNumber();
@@ -68,12 +70,13 @@ router.route('/plus').post(function (req, res, next) {
     headers: headers,
     body: req.body
   }, function (error, response, body) {
-    console.log(body);
-    res.send({
-      error: error,
-      response: response,
-      body: body
-    });
+    if (body.Code === 1) {
+      Votes.findByOwner(req.body.OpenUserId).then(vote => {
+        vote.score = vote.score + req.body.Score;
+        vote.save();
+      })
+    }
+    res.send(body);
   });
 
 });

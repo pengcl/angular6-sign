@@ -18,7 +18,7 @@ export class UserService {
   getUser() {
     const user = this.storageSvc.get('user');
     if (!user) {
-      this.router.navigate(['index']);
+      this.router.navigate(['start']);
     } else {
       return user;
     }

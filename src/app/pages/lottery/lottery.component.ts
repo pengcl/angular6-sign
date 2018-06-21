@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Config} from '../../config';
 
+import {DialogService, MaskComponent} from 'ngx-weui';
 import {UserService} from '../../services/user.service';
 import {ActivityService} from '../../services/activity.service';
+import {VoteService} from '../../services/vote.service';
 import {LotteryService} from '../../services/lottery.service';
 
 @Component({
@@ -14,25 +16,24 @@ import {LotteryService} from '../../services/lottery.service';
 export class LotteryComponent implements OnInit {
   config = Config;
 
+  @ViewChild('mask') mask: MaskComponent;
+
   user;
   lotteryForm: FormGroup;
 
-  constructor(private userSvc: UserService,
+  tops;
+
+  constructor(private dialogSvc: DialogService,
+              private userSvc: UserService,
               private activitySvc: ActivityService,
+              private voteSvc: VoteService,
               private lotterySvc: LotteryService) {
   }
 
   ngOnInit() {
 
     this.user = this.userSvc.getUser();
-    console.log(this.user);
 
-    /*UserToken	string	否	用户Token
-    OpenUserId	string	是	用户在当前【开发者账号+项目（集团）】下的唯一标识(相当于用户ID)
-    Score	double	是	需要增加的积分
-    ScoreEvent	enum	是	积分事件（详情看枚举字典）
-    Reason	string	否	积分变动原因 尽量英文，如需中文，需要编码
-    TransID	string	是	事务ID（当前应用下不得重复，保证提交的唯一性）*/
     this.lotteryForm = new FormGroup({
       OpenUserId: new FormControl('', [Validators.required, Validators.min(10000000000), Validators.max(19999999999)]),
       Score: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
@@ -42,18 +43,46 @@ export class LotteryComponent implements OnInit {
     });
 
     this.lotteryForm.get('OpenUserId').setValue(this.user);
-    this.lotteryForm.get('Score').setValue(1);
+    this.lotteryForm.get('Score').setValue(2000);
     this.lotteryForm.get('ScoreEvent').setValue(6);
+    this.lotteryForm.get('Reason').setValue('世界杯8强竞猜奖励');
     this.lotteryForm.get('TransID').setValue(Date.parse(new Date().toString()));
 
+    this.voteSvc.top().then(res => {
+      const tops = [];
+      res.countries.forEach(country => {
+        country.ratio = country.votes / res.voteCount;
+        tops.push(country);
+      });
+      this.tops = tops;
+      console.log(this.tops);
+    });
+
+  }
+
+  lottery() {
     this.lotterySvc.plus(this.lotteryForm.value).then(res => {
+      if (res.Code === 1) {
+        console.log('成功');
+        this.dialogSvc.show({content: '', cancel: '', confirm: ''}).subscribe(data => {
+          if (data.value) {
+
+          } else {
+
+          }
+        });
+      } else {
+        console.log('失败');
+        this.dialogSvc.show({content: '', cancel: '', confirm: ''}).subscribe(data => {
+          if (data.value) {
+
+          } else {
+
+          }
+        });
+      }
       console.log(res);
     });
-
-    this.activitySvc.get().then(res => {
-      console.log(res);
-    });
-
   }
 
 

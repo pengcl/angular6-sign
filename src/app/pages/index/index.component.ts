@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {Config} from '../../config';
 
 import {UserService} from '../../services/user.service';
@@ -24,18 +24,13 @@ export class IndexComponent implements OnInit {
   voteForm: FormGroup;
   loading = false;
 
-  tops;
-  voteCount;
-
-  lotteryForm: FormGroup;
-
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private storageSvc: StorageService,
               private dialogSvc: DialogService,
               private userSvc: UserService,
               private countriesSvc: CountriesService,
-              private voteSvc: VoteService,
-              private lotterySvc: LotteryService) {
+              private voteSvc: VoteService) {
   }
 
   ngOnInit() {
@@ -56,19 +51,6 @@ export class IndexComponent implements OnInit {
       })
     });
 
-    this.lotteryForm = new FormGroup({
-      OpenUserId: new FormControl('', [Validators.required, Validators.min(10000000000), Validators.max(19999999999)]),
-      Score: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
-      ScoreEvent: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{4}$/)]),
-      Reason: new FormControl('', []),
-      TransID: new FormControl('', [Validators.required])
-    });
-
-    this.lotteryForm.get('Score').setValue(2000);
-    this.lotteryForm.get('ScoreEvent').setValue(6);
-    this.lotteryForm.get('Reason').setValue('世界杯8强竞猜奖励');
-    this.lotteryForm.get('TransID').setValue(Date.parse(new Date().toString()));
-
     if (!this.route.snapshot.queryParams['Ticket']) {
       const url = this.userSvc.getTicket(window.location.href);
       window.location.href = url;
@@ -79,15 +61,14 @@ export class IndexComponent implements OnInit {
           this.user = res.body.Data.OpenUserId;
           this.storageSvc.set('user', this.user);
           this.voteForm.get('owner').setValue(this.user);
-          this.lotteryForm.get('OpenUserId').setValue(this.user);
           this.voteForm.get('nickName').setValue(res.body.Data.NickName);
           this.voteForm.get('avatar').setValue(res.body.Data.Avatar);
 
           this.voteSvc.find(this.user).then(vote => {
             if (vote) {
-              this.vote = vote;
-              this.voteForm.get('vote').setValue(vote.vote);
-              console.log(this.voteForm.value);
+              /*this.vote = vote;
+              this.voteForm.get('vote').setValue(vote.vote);*/
+              this.router.navigate(['/lottery']);
             }
           });
 
@@ -112,16 +93,6 @@ export class IndexComponent implements OnInit {
       });
 
       this.group = group;
-    });
-
-    this.voteSvc.top().then(res => {
-      const tops = [];
-      res.countries.forEach(country => {
-        country.ratio = country.votes / res.voteCount;
-        tops.push(country);
-      });
-      this.tops = tops;
-      console.log(this.tops);
     });
   }
 
@@ -195,9 +166,9 @@ export class IndexComponent implements OnInit {
 
     this.loading = true;
     this.voteSvc.vote(this.voteForm.value).then(res => {
-      this.lotterySvc.plus(this.lotteryForm.value).then(_res => {
-        console.log(_res);
-      });
+      if (res) {
+        this.router.navigate(['/lottery']);
+      }
     });
   }
 

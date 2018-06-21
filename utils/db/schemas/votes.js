@@ -5,6 +5,7 @@ var VotesSchema = new mongoose.Schema({
   avatar: String,
   nickName: String,
   content: String,
+  score: Number,
   vote: {
     A: String,
     B: String,
@@ -35,6 +36,7 @@ var VotesSchema = new mongoose.Schema({
 VotesSchema.pre('save', function (next) {
   if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();
+    this.score = 0;
   } else {
     this.meta.updateAt = Date.now();
   }
