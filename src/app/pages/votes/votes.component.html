@@ -1,9 +1,9 @@
-<weui-infiniteloader (loadmore)="onLoadMore($event)" #comp>
-  <div class="weui-cells__title">声音下载</div>
+<weui-infiniteloader *ngIf="currItems" (loadmore)="onLoadMore($event)" #comp>
+  <div class="weui-cells__title">投票的用户</div>
   <div class="weui-cells">
     <div *ngFor="let item of currItems" class="weui-cell">
       <div class="weui-cell__hd">
-        <img src="{{item.avatar ? audio.avatar : '/assets/images/icons/voice.png'}}"
+        <img src="{{item.avatar ? item.avatar : '/assets/images/icons/voice.png'}}"
         alt="" style="width:20px;margin-right:5px;display:block"></div>
       <div class="weui-cell__bd">
         <p>{{item.nickName}}</p>

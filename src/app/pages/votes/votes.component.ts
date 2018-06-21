@@ -26,6 +26,7 @@ export class VotesComponent implements OnInit {
     this.voteSvc.find().then(res => {
       this.votes = res;
       this.currItems = this.votes.slice(0, this.currPage * this.pageSize);
+      console.log(this.currItems);
     });
 
   }
