@@ -9,6 +9,7 @@ var mongoose = require('mongoose');
 /*var utils = require('./utils/utils');
 var wxApi = require('./routes/wxApi');*/
 
+var wxConfig = require('./routes/wx/config');
 var auth = require('./routes/mc/auth');
 var countries = require('./routes/countries');
 var votes = require('./routes/votes');
@@ -39,6 +40,7 @@ app.use('/wxApi', wxApi);*/
 //微信签名认证
 /*app.use(utils.sign(config));*/
 
+app.use('/wx/config', wxConfig);
 app.use('/mc/auth', auth);
 app.use('/countries', countries);
 app.use('/votes', votes);

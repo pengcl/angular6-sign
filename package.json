@@ -22,9 +22,11 @@
     "@angular/router": "^6.0.3",
     "cookie-parser": "^1.4.3",
     "core-js": "^2.5.4",
+    "jssha": "^2.3.1",
     "morgan": "^1.9.0",
     "ngx-weui": "^5.0.4",
     "rxjs": "^6.0.0",
+    "sha1": "^1.1.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
@@ -41,7 +43,7 @@
     "hbs": "~4.0.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~1.7.1",
+    "karma": "^2.0.3",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "~1.4.2",
     "karma-jasmine": "~1.1.1",

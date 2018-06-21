@@ -12,21 +12,23 @@ import {PIPES_DECLARATIONS} from './pipes';
 import {DIRECTIVES_DECLARATIONS} from './directives';
 
 import {WeUiModule} from 'ngx-weui';
+import {WxModule} from './modules/wx';
 
 import {AppComponent} from './app.component';
 import {StartComponent} from './pages/start/start.component';
 import {IndexComponent} from './pages/index/index.component';
-import {RuleComponent} from './pages/rule/rule.component';
 import {LotteryComponent} from './pages/lottery/lottery.component';
+import {VotesComponent} from './pages/votes/votes.component';
 import {AppErrorComponent} from './class/error.class';
 
 @NgModule({
   declarations: [
     AppComponent,
+    AppErrorComponent,
     StartComponent,
     IndexComponent,
-    RuleComponent,
     LotteryComponent,
+    VotesComponent,
     ...PIPES_DECLARATIONS,
     ...DIRECTIVES_DECLARATIONS
   ],
@@ -36,7 +38,8 @@ import {AppErrorComponent} from './class/error.class';
     ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
-    WeUiModule.forRoot()
+    WeUiModule.forRoot(),
+    WxModule.forRoot()
   ],
   providers: [
     ...PIPES_DECLARATIONS,

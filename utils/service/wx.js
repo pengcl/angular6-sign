@@ -1,6 +1,8 @@
 var request = require('request');
 var fs = require('fs');
 var Q = require('q');
+var jsSHA = require('jssha');
+var sha1 = require('sha1');
 var config = require('../../config/config');
 var WxSvc = {};
 
@@ -162,12 +164,11 @@ WxSvc.sign = function (ticket, url) {//生成签名
     url: url
   };
   var string = raw(data);
-  jsSHA = require('jssha');
-  shaObj = new jsSHA(string, 'TEXT');
-  data.signature = shaObj.getHash('SHA-1', 'HEX');
+  data.signature = sha1(string);
 
   data.appId = config.duty.appID;
 
+  console.log(data);
   return data;
 };
 

@@ -1,5 +1,39 @@
+<div class="content-scrollable">
+  <div class="tops">
+    <img src="/assets/images/lottery/content-bg.png">
+    <div class="content">
+      <div class="weui-cells">
 
+        <div *ngFor="let item of tops" class="weui-cell">
+          <div class="weui-cell__hd"><img src="/assets/images/flags/{{item.group}}/{{item.flag}}.png" alt="" style="width:20px;margin-right:5px;display:block"></div>
+          <div class="weui-cell__bd">
+            <p>{{item.country}}</p>
+          </div>
+          <div class="weui-cell__ft">{{item.ratio * 100}}%</div>
+        </div>
+      </div>
+      <div class="weui-btn-area">
+        <a (click)="lottery()" weui-button [weui-loading]="loading" class="weui-btn weui-btn_primary">开始抽奖</a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <weui-mask #mask>
-  <div></div>
+  <div class="prize">
+    <img src="/assets/images/lottery/prize-bg.png">
+    <div class="content">
+      <div class="msg">获取会员<em>2000</em>积分</div>
+      <div class="weui-btn-area">
+        <div class="weui-flex">
+          <div class="weui-flex__item">
+            <a (click)="goHome()" class="weui-btn weui-btn_primary">查看积分</a>
+          </div>
+          <div class="weui-flex__item">
+            <a routerLink="/start" class="weui-btn weui-btn_primary">返回首页</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </weui-mask>

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  webHost: 'http://uc.heyazl.net'
+  webHost: 'http://cup.heyazl.net'
 };
 
 /*

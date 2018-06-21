@@ -1,0 +1,12 @@
+{
+  "duty": {
+    "webHost": "http://wx.dutyhb.com",
+    "appID": "wxf7d33706f2df9dc4",
+    "mch_id": "1493990612",
+    "notify_url": "http://wx.dutyhb.com/api/wx/trade",
+    "appSecret": "2ef183397033ce1b9876c37a1b5cbb80",
+    "token": "duty",
+    "prefix": "https://api.weixin.qq.com/cgi-bin/",
+    "mpPrefix": "https://mp.weixin.qq.com/cgi-bin/"
+  }
+}

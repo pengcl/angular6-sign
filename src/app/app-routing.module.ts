@@ -4,16 +4,16 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {StartComponent} from './pages/start/start.component';
 import {IndexComponent} from './pages/index/index.component';
-import {RuleComponent} from './pages/rule/rule.component';
 import {LotteryComponent} from './pages/lottery/lottery.component';
+import {VotesComponent} from './pages/votes/votes.component';
 
 export const routes: Routes = [
 
   {path: '', redirectTo: '/start', pathMatch: 'full'},
   {path: 'start', component: StartComponent},
   {path: 'index', component: IndexComponent},
-  {path: 'rule', component: RuleComponent},
-  {path: 'lottery', component: LotteryComponent}
+  {path: 'lottery', component: LotteryComponent},
+  {path: 'votes', component: VotesComponent}
 ];
 
 @NgModule({

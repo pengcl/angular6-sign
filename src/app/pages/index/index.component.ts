@@ -3,10 +3,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Config} from '../../config';
 
+import {WxService} from '../../modules/wx';
 import {UserService} from '../../services/user.service';
 import {CountriesService} from '../../services/countries.service';
 import {VoteService} from '../../services/vote.service';
-import {LotteryService} from '../../services/lottery.service';
 import {StorageService} from '../../services/storage.service';
 import {DialogService} from 'ngx-weui';
 
@@ -28,12 +28,27 @@ export class IndexComponent implements OnInit {
               private router: Router,
               private storageSvc: StorageService,
               private dialogSvc: DialogService,
+              private wxSvc: WxService,
               private userSvc: UserService,
               private countriesSvc: CountriesService,
               private voteSvc: VoteService) {
   }
 
   ngOnInit() {
+
+    this.wxSvc.config({
+      success: () => {
+        console.log('分享成功');
+      },
+      cancel: () => {
+        console.log('cancel');
+      }
+    }).then(() => {
+      // 其它操作，可以确保注册成功以后才有效
+      console.log('注册成功');
+    }).catch((err: string) => {
+      console.log(`注册失败，原因：${err}`);
+    });
 
     this.voteForm = new FormGroup({
       owner: new FormControl('', [Validators.required]),

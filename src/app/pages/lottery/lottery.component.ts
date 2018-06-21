@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Config} from '../../config';
 
 import {DialogService, MaskComponent} from 'ngx-weui';
+import {WxService} from '../../modules/wx';
 import {UserService} from '../../services/user.service';
 import {ActivityService} from '../../services/activity.service';
 import {VoteService} from '../../services/vote.service';
@@ -20,10 +21,12 @@ export class LotteryComponent implements OnInit {
 
   user;
   lotteryForm: FormGroup;
+  loading = false;
 
   tops;
 
   constructor(private dialogSvc: DialogService,
+              private wxSvc: WxService,
               private userSvc: UserService,
               private activitySvc: ActivityService,
               private voteSvc: VoteService,
@@ -31,6 +34,20 @@ export class LotteryComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.wxSvc.config({
+      success: () => {
+        console.log('分享成功');
+      },
+      cancel: () => {
+        console.log('cancel');
+      }
+    }).then(() => {
+      // 其它操作，可以确保注册成功以后才有效
+      console.log('注册成功');
+    }).catch((err: string) => {
+      console.log(`注册失败，原因：${err}`);
+    });
 
     this.user = this.userSvc.getUser();
 
@@ -58,31 +75,32 @@ export class LotteryComponent implements OnInit {
       console.log(this.tops);
     });
 
+    this.voteSvc.find(this.user).then(vote => {
+      if (vote.score !== 0) {
+        this.mask.show();
+      }
+    });
+
   }
 
   lottery() {
+    if (this.loading) {
+      return false;
+    }
+    this.loading = true;
     this.lotterySvc.plus(this.lotteryForm.value).then(res => {
+      this.loading = false;
       if (res.Code === 1) {
-        console.log('成功');
-        this.dialogSvc.show({content: '', cancel: '', confirm: ''}).subscribe(data => {
-          if (data.value) {
-
-          } else {
-
-          }
-        });
+        this.mask.show();
       } else {
-        console.log('失败');
-        this.dialogSvc.show({content: '', cancel: '', confirm: ''}).subscribe(data => {
-          if (data.value) {
-
-          } else {
-
-          }
-        });
+        this.dialogSvc.show({content: res.Message, cancel: '', confirm: '我知道了'}).subscribe();
       }
       console.log(res);
     });
+  }
+
+  goHome() {
+    window.location.href = 'https://m.mallcoo.cn/a/user/10164/center';
   }
 
 
