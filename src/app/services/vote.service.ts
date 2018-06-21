@@ -16,6 +16,13 @@ export class VoteService {
       .catch(this.handleError);
   }
 
+  top(): Promise<any> {
+    return this.http.get(Config.prefix.api + '/votes/top')
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
   vote(body): Promise<any> {
     return this.http.post(Config.prefix.api + '/votes/vote', body, {})
       .toPromise()

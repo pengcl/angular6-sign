@@ -25,6 +25,6 @@
   </div>
 
   <div class="weui-btn-area">
-    <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">我要提交</a>
+    <a (click)="submit()" [disabled]="vote" weui-button [weui-loading]="loading" class="weui-btn weui-btn_primary">{{vote ? '您已经竞猜过了' : '我要提交'}}</a>
   </div>
 </div>

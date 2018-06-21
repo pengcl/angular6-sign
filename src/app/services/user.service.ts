@@ -8,7 +8,6 @@ import {StorageService} from './storage.service';
 
 @Injectable({providedIn: 'root'})
 export class UserService {
-  private user;
 
   constructor(private storageSvc: StorageService,
               private activatedRoute: ActivatedRoute,
