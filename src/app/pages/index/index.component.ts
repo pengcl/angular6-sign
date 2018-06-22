@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router, ActivatedRoute} from '@angular/router';
 import {Config} from '../../config';
@@ -8,7 +8,7 @@ import {UserService} from '../../services/user.service';
 import {CountriesService} from '../../services/countries.service';
 import {VoteService} from '../../services/vote.service';
 import {StorageService} from '../../services/storage.service';
-import {DialogService} from 'ngx-weui';
+import {DialogService, MaskComponent} from 'ngx-weui';
 
 @Component({
   selector: 'app-index',
@@ -23,6 +23,9 @@ export class IndexComponent implements OnInit {
   group;
   voteForm: FormGroup;
   loading = false;
+  isSubmit = false;
+
+  @ViewChild('login') login: MaskComponent;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -51,18 +54,20 @@ export class IndexComponent implements OnInit {
     });
 
     this.voteForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      mobile: new FormControl('', [Validators.required]),
       owner: new FormControl('', [Validators.required]),
       nickName: new FormControl('', [Validators.required]),
       avatar: new FormControl('', [Validators.required]),
       vote: new FormGroup({
-        A: new FormControl('', [Validators.required]),
-        B: new FormControl('', [Validators.required]),
-        C: new FormControl('', [Validators.required]),
-        D: new FormControl('', [Validators.required]),
-        E: new FormControl('', [Validators.required]),
-        F: new FormControl('', [Validators.required]),
-        G: new FormControl('', [Validators.required]),
-        H: new FormControl('', [Validators.required])
+        A: new FormControl('', []),
+        B: new FormControl('', []),
+        C: new FormControl('', []),
+        D: new FormControl('', []),
+        E: new FormControl('', []),
+        F: new FormControl('', []),
+        G: new FormControl('', []),
+        H: new FormControl('', [])
       })
     });
 
@@ -163,7 +168,18 @@ export class IndexComponent implements OnInit {
     }
   }
 
+  showLogin() {
+    const count = this.getCount();
+    if (count < 8) {
+      this.dialogSvc.show({content: '您还没有选够8只队伍!', cancel: '', confirm: '继续选择'}).subscribe();
+      return false;
+    }
+    this.login.show();
+  }
+
   submit() {
+    console.log(this.voteForm.controls);
+    this.isSubmit = true;
 
     if (this.vote) {
       return false;
@@ -173,9 +189,7 @@ export class IndexComponent implements OnInit {
       return false;
     }
 
-    const count = this.getCount();
-    if (count < 8) {
-      this.dialogSvc.show({content: '您还没有选够8只队伍!', cancel: '', confirm: '继续选择'}).subscribe();
+    if (this.voteForm.invalid) {
       return false;
     }
 

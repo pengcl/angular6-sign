@@ -25,6 +25,41 @@
   </div>
 
   <div class="weui-btn-area">
-    <a (click)="submit()" [disabled]="vote" weui-button [weui-loading]="loading" class="weui-btn weui-btn_primary">{{vote ? '您已经竞猜过了' : '我要提交'}}</a>
+    <a (click)="showLogin()" [disabled]="vote" weui-button [weui-loading]="loading" class="weui-btn weui-btn_primary">{{vote ? '您已经竞猜过了' : '我要提交'}}</a>
   </div>
 </div>
+
+<weui-mask #login>
+  <div class="login">
+    <img src="/assets/images/index/login-bg.png">
+    <div [formGroup]="voteForm" class="content">
+      <div class="weui-cells weui-cells_form">
+        <div class="weui-cell" [ngClass]="{'weui-cell_warn':voteForm.get('name').invalid && isSubmit}">
+          <div class="weui-cell__hd">
+            <img src="/assets/images/icons/profile.png" style="width:0.2rem;margin-right:0.05rem;display:block">
+          </div>
+          <div class="weui-cell__bd">
+            <input formControlName="name" class="weui-input" placeholder="请输入您的姓名">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+        <div class="weui-cell" [ngClass]="{'weui-cell_warn':voteForm.get('mobile').invalid && isSubmit}">
+          <div class="weui-cell__hd">
+            <img src="/assets/images/icons/mobile.png" style="width:0.2rem;margin-right:0.05rem;display:block">
+          </div>
+          <div class="weui-cell__bd">
+            <input formControlName="mobile" class="weui-input" placeholder="请输入您的手机号">
+          </div>
+          <div class="weui-cell__ft">
+            <i class="weui-icon-warn"></i>
+          </div>
+        </div>
+      </div>
+      <div class="weui-btn-area">
+        <a (click)="submit()" weui-button [weui-loading]="loading" class="weui-btn weui-btn_primary">提交</a>
+      </div>
+    </div>
+  </div>
+</weui-mask>

@@ -69,3 +69,52 @@
     }
   }
 }
+
+weui-mask {
+  .login {
+    width: 96%;
+    margin: 0 2%;
+    position: relative;
+    img {
+      width: 100%;
+      display: block;
+    }
+    .content {
+      position: absolute;
+      left: 15%;
+      bottom: 0;
+      width: 70%;
+      font-size: 0.14rem;
+      .weui-cells_form {
+        font-size: 0.14rem;
+        &:before,&:after {
+          display: none;
+        }
+        .weui-cell {
+          margin: 0.15rem 0.1rem;
+          padding: 0.075rem 0.05rem;
+          border-radius: 0.04rem;
+          border: 2px solid #ccc;
+          &:before,&:after {
+            display: none;
+          }
+          .weui-cell__ft {
+            .weui-icon-warn {
+              font-size: 0.2rem;
+            }
+          }
+        }
+      }
+      .weui-btn-area {
+        margin: 0.2rem 0.05rem 0.5rem;
+        .weui-btn_primary {
+          background: #4893d2;
+          font-size: 0.16rem;
+          line-height: 2;
+          margin: 0 0.075rem;
+        }
+      }
+    }
+  }
+}
+

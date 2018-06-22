@@ -18,6 +18,7 @@ export class LotteryComponent implements OnInit {
   config = Config;
 
   @ViewChild('mask') mask: MaskComponent;
+  @ViewChild('login') login: MaskComponent;
 
   user;
   lotteryForm: FormGroup;
@@ -73,13 +74,14 @@ export class LotteryComponent implements OnInit {
         tops.push(country);
       });
       this.tops = tops;
-      console.log(this.tops);
     });
 
     this.voteSvc.find(this.user).then(vote => {
-      this.vote = vote;
-      if (this.vote.score !== 0) {
-        this.mask.show();
+      if (vote) {
+        this.vote = vote;
+        if (this.vote.score !== 0) {
+          this.mask.show();
+        }
       }
     });
 
@@ -90,9 +92,13 @@ export class LotteryComponent implements OnInit {
       return false;
     }
 
-    if (!this.vote.name) {
-      // todo createUser interface;
+    if (!this.vote) {
+      this.login.show();
       return false;
+    }
+
+    if (this.vote.score !== 0) {
+      this.mask.show();
     }
 
     this.loading = true;
@@ -103,7 +109,6 @@ export class LotteryComponent implements OnInit {
       } else {
         this.dialogSvc.show({content: res.Message, cancel: '', confirm: '我知道了'}).subscribe();
       }
-      console.log(res);
     });
   }
 
