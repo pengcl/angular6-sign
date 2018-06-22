@@ -35,7 +35,7 @@ export class UserService {
       CallbackUrl: CallbackUrl
     };
     const prams = formDataToUrl(body);
-    return 'https://m.mallcoo.cn/a/open/User/V2/OAuth/BaseInfo/' + prams;
+    return 'https://m.mallcoo.cn/a/open/User/V2/OAuth/CardInfo/' + prams;
   }
 
   getUserToken(ticket) {

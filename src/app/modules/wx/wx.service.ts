@@ -19,7 +19,7 @@ export class WxService extends BaseService {
     title: '约战国金，由您足宰！',
     desc: '参与活动的会员可通过抽奖获得会员积分，猜中出线国家队伍更可有机会获得XXXX礼品一份。',
     link: Config.webHost + '/start',
-    imgUrl: ''
+    imgUrl: Config.webHost + '/assets/images/share.jpg'
   };
 
   private share: any;

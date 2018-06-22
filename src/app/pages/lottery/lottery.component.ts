@@ -1,4 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Config} from '../../config';
 
@@ -27,7 +28,8 @@ export class LotteryComponent implements OnInit {
   tops;
   vote;
 
-  constructor(private dialogSvc: DialogService,
+  constructor(private router: Router,
+              private dialogSvc: DialogService,
               private wxSvc: WxService,
               private userSvc: UserService,
               private activitySvc: ActivityService,
@@ -70,7 +72,7 @@ export class LotteryComponent implements OnInit {
     this.voteSvc.top().then(res => {
       const tops = [];
       res.countries.forEach(country => {
-        country.ratio = country.votes / res.voteCount;
+        country.ratio = (country.votes / res.voteCount).toFixed(4);
         tops.push(country);
       });
       this.tops = tops;
@@ -82,6 +84,8 @@ export class LotteryComponent implements OnInit {
         if (this.vote.score !== 0) {
           this.mask.show();
         }
+      } else {
+        this.router.navigate(['/start']);
       }
     });
 

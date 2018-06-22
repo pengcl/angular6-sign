@@ -159,8 +159,8 @@ export class IndexComponent implements OnInit {
 
     const count = this.getCount();
 
-    if (count >= 8) {
-      this.dialogSvc.show({content: '您已经选择了8只队伍了!', cancel: '继续', confirm: '我选好了'}).subscribe(res => {
+    if (count >= 4) {
+      this.dialogSvc.show({content: '您已经选择了4只队伍了!', cancel: '继续', confirm: '我选好了'}).subscribe(res => {
         if (!res.value) {
           console.log('重新选择');
         }
@@ -170,8 +170,8 @@ export class IndexComponent implements OnInit {
 
   showLogin() {
     const count = this.getCount();
-    if (count < 8) {
-      this.dialogSvc.show({content: '您还没有选够8只队伍!', cancel: '', confirm: '继续选择'}).subscribe();
+    if (count < 4) {
+      this.dialogSvc.show({content: '您还没有选够4只队伍!', cancel: '', confirm: '继续选择'}).subscribe();
       return false;
     }
     this.login.show();
