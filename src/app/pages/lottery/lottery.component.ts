@@ -52,15 +52,15 @@ export class LotteryComponent implements OnInit {
     this.user = this.userSvc.getUser();
 
     this.lotteryForm = new FormGroup({
-      OpenUserId: new FormControl('', [Validators.required, Validators.min(10000000000), Validators.max(19999999999)]),
-      Score: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
-      ScoreEvent: new FormControl('', [Validators.required, Validators.pattern(/^[0-9]{4}$/)]),
+      OpenUserId: new FormControl('', [Validators.required]),
+      Score: new FormControl('', [Validators.required]),
+      ScoreEvent: new FormControl('', [Validators.required]),
       Reason: new FormControl('', []),
       TransID: new FormControl('', [Validators.required])
     });
 
     this.lotteryForm.get('OpenUserId').setValue(this.user);
-    this.lotteryForm.get('Score').setValue(2000);
+    this.lotteryForm.get('Score').setValue(2);
     this.lotteryForm.get('ScoreEvent').setValue(6);
     this.lotteryForm.get('Reason').setValue('世界杯8强竞猜奖励');
     this.lotteryForm.get('TransID').setValue(Date.parse(new Date().toString()));

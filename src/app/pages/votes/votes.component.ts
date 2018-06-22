@@ -18,6 +18,8 @@ export class VotesComponent implements OnInit {
 
   currItems;
 
+  result = [];
+
   constructor(private voteSvc: VoteService) {
   }
 

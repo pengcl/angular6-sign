@@ -4,6 +4,7 @@ var CountriesSchema = new mongoose.Schema({
   country: String,
   group: String,
   votes: Number,
+  ranking: Number,// 32:32强,16:16强,8:8强,4:4强,3:季军,2:亚军,1:冠军
   meta: {
     createAt: {
       type: Date,
@@ -25,6 +26,7 @@ CountriesSchema.pre('save', function (next) {
   if (this.isNew) {
     this.meta.createAt = this.meta.updateAt = Date.now();
     this.votes = 0;
+    this.ranking = 32;
   } else {
     this.meta.updateAt = Date.now();
   }
