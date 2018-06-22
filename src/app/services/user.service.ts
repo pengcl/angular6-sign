@@ -24,6 +24,17 @@ export class UserService {
     }
   }
 
+  getLocUser() {
+    return this.storageSvc.get('locUser');
+  }
+
+  create(body): Promise<any> {
+    return this.http.get(Config.prefix.api + '/mc/auth/getUserToken?ticket=' + ticket)
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
   getTicket(CallbackUrl) {
     const body = {
       AppID: Config.mc.AppID,

@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 //申明一个mongoons对象
 var VotesSchema = new mongoose.Schema({
+  name: String,
+  mobile: String,
   owner: String,
   avatar: String,
   nickName: String,

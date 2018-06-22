@@ -24,6 +24,7 @@ export class LotteryComponent implements OnInit {
   loading = false;
 
   tops;
+  vote;
 
   constructor(private dialogSvc: DialogService,
               private wxSvc: WxService,
@@ -76,7 +77,8 @@ export class LotteryComponent implements OnInit {
     });
 
     this.voteSvc.find(this.user).then(vote => {
-      if (vote.score !== 0) {
+      this.vote = vote;
+      if (this.vote.score !== 0) {
         this.mask.show();
       }
     });
@@ -87,6 +89,12 @@ export class LotteryComponent implements OnInit {
     if (this.loading) {
       return false;
     }
+
+    if (!this.vote.name) {
+      // todo createUser interface;
+      return false;
+    }
+
     this.loading = true;
     this.lotterySvc.plus(this.lotteryForm.value).then(res => {
       this.loading = false;

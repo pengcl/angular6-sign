@@ -41,11 +41,7 @@ router.get('/getUserToken', function (req, res, next) {
     headers: headers,
     body: {Ticket: req.query.ticket}
   }, function (error, response, body) {
-    res.send({
-      error: error,
-      response: response,
-      body: body
-    });
+    res.send(body);
   });
 });
 

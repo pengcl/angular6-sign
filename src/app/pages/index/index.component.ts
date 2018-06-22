@@ -72,12 +72,12 @@ export class IndexComponent implements OnInit {
     } else {
       this.ticket = this.route.snapshot.queryParams['Ticket'];
       this.userSvc.getUserToken(this.ticket).then(res => {
-        if (res.body.Code === 1) {
-          this.user = res.body.Data.OpenUserId;
+        if (res.Code === 1) {
+          this.user = res.Data.OpenUserId;
           this.storageSvc.set('user', this.user);
           this.voteForm.get('owner').setValue(this.user);
-          this.voteForm.get('nickName').setValue(res.body.Data.NickName);
-          this.voteForm.get('avatar').setValue(res.body.Data.Avatar);
+          this.voteForm.get('nickName').setValue(res.Data.NickName);
+          this.voteForm.get('avatar').setValue(res.Data.Avatar);
 
           this.voteSvc.find(this.user).then(vote => {
             if (vote) {

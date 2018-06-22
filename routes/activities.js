@@ -42,11 +42,7 @@ router.get('/getActivities', function (req, res, next) {
     headers: headers,
     body: {}
   }, function (error, response, body) {
-    res.send({
-      error: error,
-      response: response,
-      body: body
-    });
+    res.send(body);
   });
 });
 
