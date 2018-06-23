@@ -66,13 +66,13 @@ export class LotteryComponent implements OnInit {
     this.lotteryForm.get('OpenUserId').setValue(this.user);
     this.lotteryForm.get('Score').setValue(2);
     this.lotteryForm.get('ScoreEvent').setValue(6);
-    this.lotteryForm.get('Reason').setValue('世界杯8强竞猜奖励');
+    this.lotteryForm.get('Reason').setValue('世界杯16中4竞猜奖励');
     this.lotteryForm.get('TransID').setValue(Date.parse(new Date().toString()));
 
     this.voteSvc.top().then(res => {
       const tops = [];
       res.countries.forEach(country => {
-        country.ratio = (country.votes / res.voteCount).toFixed(4);
+        country.ratio = country.votes / res.voteCount;
         tops.push(country);
       });
       this.tops = tops;

@@ -17,7 +17,7 @@ export class WxService extends BaseService {
 
   private DEFAULTSHARE: any = {
     title: '约战国金，由您足宰！',
-    desc: '参与活动的会员可通过抽奖获得会员积分，猜中出线国家队伍更可有机会获得XXXX礼品一份。',
+    desc: '快来参与广州IFC国金天地世界杯竞猜活动，赢取丰厚礼品吧！',
     link: Config.webHost + '/start',
     imgUrl: Config.webHost + '/assets/images/share.jpg'
   };

@@ -39,7 +39,8 @@
     margin: 0.1rem;
     border: 2px solid #fff;
     position: absolute;
-    bottom: 0;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
     .rules-logo {
       position: absolute;
       width: 40%;
