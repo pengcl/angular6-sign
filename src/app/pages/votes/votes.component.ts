@@ -3,6 +3,7 @@ import {timer as observableTimer, interval as observableInterval, Observable} fr
 
 import {InfiniteLoaderComponent} from 'ngx-weui';
 
+import {CountriesService} from '../../services/countries.service';
 import {VoteService} from '../../services/vote.service';
 
 @Component({
@@ -18,17 +19,46 @@ export class VotesComponent implements OnInit {
 
   currItems;
 
-  result = [];
+  countries;
+  promotions = [];
 
-  constructor(private voteSvc: VoteService) {
+  constructor(private countriesSvc: CountriesService,
+              private voteSvc: VoteService) {
   }
 
   ngOnInit() {
 
-    this.voteSvc.find().then(res => {
-      this.votes = res;
-      this.currItems = this.votes.slice(0, this.currPage * this.pageSize);
-      console.log(this.currItems);
+    this.countriesSvc.find().then(res => res.filter(item => item.ranking === 16)).then(promotions => {
+      const prom = [];
+      promotions.forEach(item => {
+        prom.push(item._id);
+      });
+      this.voteSvc.find().then(res => {
+        this.votes = res;
+        this.currItems = this.votes.slice(0, this.currPage * this.pageSize);
+        this.votes.forEach((vote, index) => {
+          let votes = [];
+          for (const key in vote.vote) {
+            if (vote.vote[key]) {
+              vote.vote[key].split(',');
+              if (votes.length === 0) {
+                votes = vote.vote[key].split(',');
+              } else {
+                votes = votes.concat(vote.vote[key].split(','));
+              }
+            }
+          }
+          let count = 0;
+          votes.forEach(item => {
+            if (prom.indexOf(item) !== -1) {
+              count = count + 1;
+            }
+          });
+          if (count >= 4) {
+            this.promotions.push(this.votes[index]);
+          }
+        });
+      });
     });
 
   }

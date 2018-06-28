@@ -1,3 +1,6 @@
+.weui-infiniteloader {
+  background: #f7f7f7;
+}
 .weui-media-box_appmsg {
   padding: 0.15rem;
   .weui-media-box__hd {
@@ -19,5 +22,12 @@
   .weui-media-box__info {
     font-size: 0.13rem;
     margin-top: 0.1rem;
+  }
+}
+
+.right {
+  float: right;
+  em {
+    color: red;
   }
 }
