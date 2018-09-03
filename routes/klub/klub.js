@@ -127,13 +127,14 @@ router.get('/auth', function (req, res, next) {
   params['interfaceId'] = Config.interfaceId;
   params['apiKey'] = Config.apiKey;
   params['account_id'] = Config.account_id;
-  params['scope'] = 'base';
+  params['scope'] = 'user';
   params['redirect_uri'] = req.query.redirect_uri;
   params['h_app_id'] = Config.apiKey;
   params['sign'] = signature(params);
   params['redirect_uri'] = encodeURIComponent(req.query.redirect_uri);
   params = formDataToUrl(params);
   const url = "http://api.klub11.com/v1/oauth2/authorize-base" + params;
+  console.log(url);
 
   res.location(url);
   res.statusCode = 301;
@@ -147,7 +148,7 @@ router.get('/auth', function (req, res, next) {
   }, function (error, response, body) {
     console.log(body);
     const data = decode(body);
-    res.send(body);
+    res.send(data);
   });*/
 });
 

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {Config} from '../../config';
 import {DialogService, PickerService} from 'ngx-weui';
 
@@ -22,6 +23,9 @@ const CITIES = [
   styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
+
+  openid;
+
   cities: any[] = CITIES;
 
   courses: any[];
@@ -29,21 +33,24 @@ export class IndexComponent implements OnInit {
 
   signForm: FormGroup;
 
-  constructor(private pickerSvc: PickerService,
+  constructor(private route: ActivatedRoute,
+              private pickerSvc: PickerService,
               private userSvc: UserService) {
   }
 
   ngOnInit() {
+
+    this.openid = this.route.snapshot.queryParams['openid'];
+    if (!this.openid) {
+      window.location.href = Config.prefix.api + '/klub/auth?redirect_uri=' + window.location.href;
+    }
+
     this.signForm = new FormGroup({
       shop: new FormControl('artstore', [Validators.required]),
       is_on_sale: new FormControl(1, [Validators.required]),
       sid: new FormControl('', [Validators.required]),
       page: new FormControl(1, [Validators.required]),
       size: new FormControl(1000, [Validators.required])
-    });
-
-    this.userSvc.auth('http://cup.heyazl.net/result').then(res => {
-      console.log(res);
     });
 
     this.userSvc.getConfig(window.location.href).then(res => {

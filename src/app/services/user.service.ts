@@ -43,7 +43,9 @@ export class UserService {
   }
 
   auth(url) {
-    return this.http.get(Config.prefix.api + '/klub/auth?redirect_uri=' + encodeURIComponent(url))
+    url = encodeURIComponent(url);
+    console.log(url);
+    return this.http.get(Config.prefix.api + '/klub/auth?redirect_uri=' + url)
       .toPromise()
       .then(response => response)
       .catch(this.handleError);
@@ -52,9 +54,7 @@ export class UserService {
   getCourses(body) {
     return this.http.post(Config.prefix.api + '/klub/getCourses', body)
       .toPromise()
-      .then(response => {
-        console.log(response);
-      })
+      .then(response => response)
       .catch(this.handleError);
   }
 
