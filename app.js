@@ -9,11 +9,8 @@ var mongoose = require('mongoose');
 /*var utils = require('./utils/utils');
 var wxApi = require('./routes/wxApi');*/
 
+var klub = require('./routes/klub/klub');
 var wxConfig = require('./routes/wx/config');
-var auth = require('./routes/mc/auth');
-var countries = require('./routes/countries');
-var votes = require('./routes/votes');
-var activities = require('./routes/activities');
 
 var app = express();
 
@@ -41,11 +38,7 @@ app.use('/wxApi', wxApi);*/
 /*app.use(utils.sign(config));*/
 
 app.use('/wx/config', wxConfig);
-app.use('/mc/auth', auth);
-app.use('/countries', countries);
-app.use('/votes', votes);
-app.use('/activities', activities);
-
+app.use('/klub', klub);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -8,6 +8,7 @@ html, body {
 body {
   padding: 0;
   margin: 0;
+  font-size: 0.14rem;
 }
 
 .content-scrollable {
@@ -37,8 +38,4 @@ body {
       display: none;
     }
   }
-}
-
-.weui-mask {
-  background: rgba(0, 0, 0, 0.85);
 }

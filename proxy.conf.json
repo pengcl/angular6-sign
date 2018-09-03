@@ -7,5 +7,14 @@
     },
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/kpi": {
+    "target": "http://test.api.klub11.com",
+    "secure": false,
+    "pathRewrite": {
+      "^/kpi/": ""
+    },
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

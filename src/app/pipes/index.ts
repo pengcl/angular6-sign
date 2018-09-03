@@ -1,6 +1,7 @@
-import {RepairDatePipe, KeysPipe} from './pipes.pipe';
+import {RepairDatePipe, KeysPipe, LabelPipe} from './pipes.pipe';
 
 export const PIPES_DECLARATIONS = [
   RepairDatePipe,
-  KeysPipe
+  KeysPipe,
+  LabelPipe
 ];

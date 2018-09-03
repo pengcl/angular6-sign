@@ -1,65 +1,19 @@
-<div class="groups">
-  <div class="banner">
-    <img src="/assets/images/index/banner.jpg">
-  </div>
-  <div class="group-list">
-    <div class="group" *ngFor="let country of group | keys">
-      <div class="group-name">
-        <div class="weui-flex">
-          <div class="label weui-flex__item">GROUP</div>
-          <div class="value weui-flex__item">{{country.key}}</div>
-        </div>
-      </div>
-      <div class="weui-flex">
-        <div (click)="setCountry(item)" [ngClass]="{'selected':voteForm.get('vote').get(country.key).value.indexOf(item._id) !== -1}" *ngFor="let item of country.value" class="weui-flex__item">
-          <div class="flag weui-grid__icon">
-            <img src="/assets/images/flags/{{country.key}}/{{item.flag}}.png" alt="">
-          </div>
-          <p class="weui-grid__label">{{item.country}}</p>
-          <div class="check-box weui-grid__icon">
-            <i class="weui-icon-success"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="content-scrollable">
+  <div class="weui-cells">
 
-  <div class="weui-btn-area">
-    <a (click)="showLogin()" [disabled]="vote" weui-button [weui-loading]="loading" class="weui-btn weui-btn_primary">{{vote ? '您已经竞猜过了' : '我要提交'}}</a>
+    <a (click)="showCities()" class="weui-cell weui-cell_access">
+      <div class="weui-cell__hd"><i class="icons icons-address"></i></div>
+      <div class="weui-cell__bd">
+        <p>选择地区</p>
+      </div>
+      <div class="weui-cell__ft">{{signForm.get('sid').value ? (signForm.get('sid').value | label : cities) : '请选择城市'}}</div>
+    </a>
+    <a class="weui-cell weui-cell_access" href="javascript:;">
+      <div class="weui-cell__hd"><i class="icons icons-edu"></i></div>
+      <div class="weui-cell__bd">
+        <p>选择课程</p>
+      </div>
+      <div class="weui-cell__ft">表选择课程</div>
+    </a>
   </div>
 </div>
-
-<weui-mask #login>
-  <div class="login">
-    <img src="/assets/images/index/login-bg.png">
-    <div [formGroup]="voteForm" class="content">
-      <div class="weui-cells weui-cells_form">
-        <div class="weui-cell" [ngClass]="{'weui-cell_warn':voteForm.get('name').invalid && isSubmit}">
-          <div class="weui-cell__hd">
-            <img src="/assets/images/icons/profile.png" style="width:0.2rem;margin-right:0.05rem;display:block">
-          </div>
-          <div class="weui-cell__bd">
-            <input formControlName="name" class="weui-input" placeholder="请输入您的姓名">
-          </div>
-          <div class="weui-cell__ft">
-            <i class="weui-icon-warn"></i>
-          </div>
-        </div>
-        <div class="weui-cell" [ngClass]="{'weui-cell_warn':voteForm.get('mobile').invalid && isSubmit}">
-          <div class="weui-cell__hd">
-            <img src="/assets/images/icons/mobile.png" style="width:0.2rem;margin-right:0.05rem;display:block">
-          </div>
-          <div class="weui-cell__bd">
-            <input formControlName="mobile" class="weui-input" placeholder="请输入您的手机号">
-          </div>
-          <div class="weui-cell__ft">
-            <i class="weui-icon-warn"></i>
-          </div>
-        </div>
-      </div>
-      <div class="weui-btn-area">
-        <a (click)="submit()" weui-button [weui-loading]="loading" class="weui-btn weui-btn_primary">提交</a>
-      </div>
-    </div>
-  </div>
-</weui-mask>

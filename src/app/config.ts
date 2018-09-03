@@ -6,11 +6,12 @@ export const Config = {
     'front': environment.webHost + '/front',
     'admin': environment.webHost + '/admin',
     'api': environment.webHost + '/api',
-    'wApi': environment.webHost + '/wApi'
+    'kpi': environment.webHost + '/kpi'
   },
-  'mc': {
-    AppID: '5ad5bc8d88ce7e53f4acee44',
-    PublicKey: 'AmrTaT',
-    PrivateKey: '9d7ebe7824f2cec1'
+  'klub': {
+    apiKey: '971153595163642',
+    apiSecret: 'cA762ESb',
+    interfaceId: '1e63e6b86b751e51c35d',
+    skey: '6bf9b7b2'
   }
 };

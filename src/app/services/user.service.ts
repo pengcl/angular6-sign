@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {Config} from '../config';
-import {formDataToUrl} from '../utils/utils';
+import {formDataToUrl, signature} from '../utils/utils';
 import {StorageService} from './storage.service';
 
 @Injectable({providedIn: 'root'})
@@ -28,20 +28,33 @@ export class UserService {
     return this.storageSvc.get('locUser');
   }
 
-  getTicket(CallbackUrl) {
-    const body = {
-      AppID: Config.mc.AppID,
-      PublicKey: Config.mc.PublicKey,
-      CallbackUrl: CallbackUrl
-    };
-    const prams = formDataToUrl(body);
-    return 'https://m.mallcoo.cn/a/open/User/V2/OAuth/CardInfo/' + prams;
-  }
-
   getUserToken(ticket) {
     return this.http.get(Config.prefix.api + '/mc/auth/getUserToken?ticket=' + ticket)
       .toPromise()
       .then(response => response)
+      .catch(this.handleError);
+  }
+
+  getConfig(url) {
+    return this.http.get(Config.prefix.api + '/klub/config?domain_url=' + url)
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
+  auth(url) {
+    return this.http.get(Config.prefix.api + '/klub/auth?redirect_uri=' + encodeURIComponent(url))
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
+  getCourses(body) {
+    return this.http.post(Config.prefix.api + '/klub/getCourses', body)
+      .toPromise()
+      .then(response => {
+        console.log(response);
+      })
       .catch(this.handleError);
   }
 

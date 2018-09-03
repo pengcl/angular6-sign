@@ -30,3 +30,27 @@ export class KeysPipe implements PipeTransform {
     return keys;
   }
 }
+
+@Pipe({
+  name: 'label',
+  pure: false
+})
+
+@Injectable()
+export class LabelPipe implements PipeTransform {
+  transform(value, arr): any {
+    if (!value) {
+      return '不限';
+    }
+
+    let label = '';
+
+    arr.forEach(item => {
+      if (value === item.value) {
+        label = item.label;
+      }
+    });
+
+    return label;
+  }
+}
