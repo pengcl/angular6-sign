@@ -51,8 +51,22 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  get(id, mobile) {
+    return this.http.get(Config.prefix.api + '/klub/user?union_id=' + id + '&mobile=' + mobile)
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
   getCourses(body) {
     return this.http.post(Config.prefix.api + '/klub/getCourses', body)
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
+  sign(body) {
+    return this.http.post(Config.prefix.api + '/klub/sign', body)
       .toPromise()
       .then(response => response)
       .catch(this.handleError);

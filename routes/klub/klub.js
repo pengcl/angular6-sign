@@ -6,6 +6,8 @@ var multipartMiddleware = multipart();
 
 var crypto = require('crypto');
 
+var Users = require('../../utils/db/modules/users');//导入模型数据模块
+
 var Config = {
   apiKey: '993153596383692',
   apiSecret: '9v6BY56P',
@@ -152,6 +154,55 @@ router.get('/auth', function (req, res, next) {
   });*/
 });
 
+router.get('/user', function (req, res, next) {
+  var params = {};
+  params['timestamp'] = Date.parse(new Date().toString()) / 1000;
+  params['interfaceId'] = Config.interfaceId;
+  params['apiKey'] = Config.apiKey;
+
+  if (req.query.union_id) {
+    params['union_id'] = req.query.union_id;
+  }
+  if (req.query.mobile) {
+    params['mobile'] = req.query.mobile;
+  }
+  params['sign'] = signature(params);
+  params = formDataToUrl(params);
+
+  let url = "";
+
+  if (req.query.union_id) {
+    url = "http://api.klub11.com/v1/external/getunionidinfo" + params;
+  }
+  if (req.query.mobile) {
+    url = "http://api.klub11.com/v1/external/getmemberinfo" + params;
+  }
+
+  console.log(url);
+
+  request({
+    url: url,
+    method: "GET"
+  }, function (error, response, body) {
+    const data = decode(body);
+    let result;
+    if (res.data[0]) {
+      result = {
+        code: 0,
+        msg: '获取会员信息成功',
+        data: data.data[0]
+      }
+    } else {
+      result = {
+        code: 9999,
+        msg: '用户不存在',
+        data: 'https://app.klub11.com/?r=page/auth&account_id=' + Config.account_id + '&origin=7&_redirecturl=xxxxxxx'
+      }
+    }
+    res.send(data);
+  });
+});
+
 router.route('/getCourses').post(multipartMiddleware, function (req, res, next) {
   var params = req.body;
   params['timestamp'] = Date.parse(new Date().toString()) / 1000;
@@ -172,4 +223,69 @@ router.route('/getCourses').post(multipartMiddleware, function (req, res, next) 
   });
 });
 
+router.route('/sign').post(multipartMiddleware, function (req, res, next) {
+  var params = {};
+  for (const key in req.body) {
+    if (key !== '_redirecturl' && key !== 's_name' && key !== 'goods_name') {
+      params[key] = req.body[key];
+    }
+  }
+  params['timestamp'] = Date.parse(new Date().toString()) / 1000;
+  params['interfaceId'] = Config.interfaceId;
+  params['apiKey'] = Config.apiKey;
+  params['sign'] = signature(params);
+  params = formDataToUrl(params);
+  const url = "http://api.klub11.com/v1/external/getunionidinfo" + params;
+
+  request({
+    url: url,
+    method: "GET"
+  }, function (error, response, body) {
+    const data = JSON.parse(decode(body));
+    let result;
+    if (data.code === 0) {
+      if (data.data[0]) {
+        Users.findByUnionid(req.body.union_id, (err, user) => {
+          if (user) {
+            res.send({
+              code: 0,
+              msg: '您已经签过到了',
+              data: data.data[0]
+            });
+          } else {
+            const _user = data.data[0];
+            _user['sign'] = {
+              sid: req.body.sid,
+              s_name: req.body.s_name,
+              goods_id: req.body.goods_id,
+              goods_name: req.body.goods_name
+            };
+            var user = new Users(_user);
+            user.save((err) => {
+              if (!err) {
+                res.send({
+                  code: 0,
+                  msg: '签到成功！',
+                  data: data.data[0]
+                })
+              }
+            });
+          }
+        });
+      } else {
+        result = {
+          code: 9999,
+          msg: '用户不存在',
+          data: 'https://app.klub11.com/?r=page/auth&account_id=' + Config.account_id + '&origin=' + req.body.origin + '&_redirecturl=' + encodeURIComponent(req.body._redirecturl)
+        }
+      }
+    } else {
+      res.send(data)
+    }
+  });
+});
+
 module.exports = router;
+
+/*db.auth("sign", "Pengcl19821025")
+db.createUser({user: "sign", pwd: "Pengcl19821025", roles: [{role: "dbOwner", db: "sign"}]})*/
