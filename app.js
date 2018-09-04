@@ -14,7 +14,7 @@ var wxConfig = require('./routes/wx/config');
 
 var app = express();
 
-mongoose.connect('mongodb://sign:Pengcl19821025@101.200.72.54:27017/sign', {});
+mongoose.connect('mongodb://sign:Pengcl19821025@101.200.72.54:27017/sign', {useNewUrlParser: true});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

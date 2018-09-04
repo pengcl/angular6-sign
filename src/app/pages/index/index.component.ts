@@ -79,7 +79,7 @@ export class IndexComponent implements OnInit {
       this.signForm.get('sid').setValue(res.value);
       this.signForm.get('s_name').setValue(res.items[0].label);
       this.signForm.get('origin').setValue(res.items[0].origin);
-      this.toastSvc.show('课程加载中', 0);
+      this.toastSvc.loading('课程加载中', 0);
       this.userSvc.getCourses(this.coursesForm.value).then(_res => {
         this.toastSvc.hide();
         if (_res.code === 0) {
@@ -109,7 +109,7 @@ export class IndexComponent implements OnInit {
       this.dialogSvc.show({content: '请选择地区或课程', cancel: '', confirm: '我知道了'}).subscribe();
       return false;
     }
-    this.toastSvc.show('签到中...', 0);
+    this.toastSvc.loading('签到中...', 0);
     this.userSvc.sign(this.signForm.value).then(res => {
       this.toastSvc.hide();
       if (res.code === 0) {

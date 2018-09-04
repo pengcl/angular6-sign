@@ -247,12 +247,14 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
       if (data.data[0]) {
         Users.findByUnionid(req.body.union_id, (err, user) => {
           if (user) {
+            console.log('.....您已经签过到了......');
             res.send({
               code: 0,
               msg: '您已经签过到了',
               data: data.data[0]
             });
           } else {
+            console.log('.....用户不存在......');
             const _user = data.data[0];
             _user['sign'] = {
               sid: req.body.sid,
@@ -273,11 +275,12 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
           }
         });
       } else {
-        result = {
+        console.log('.....用户没注册过，跳转注册......');
+        res.send({
           code: 9999,
           msg: '用户不存在',
           data: 'https://app.klub11.com/?r=page/auth&account_id=' + Config.account_id + '&origin=' + req.body.origin + '&_redirecturl=' + encodeURIComponent(req.body._redirecturl)
-        }
+        });
       }
     } else {
       res.send(data)
