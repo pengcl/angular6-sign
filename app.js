@@ -9,12 +9,15 @@ var mongoose = require('mongoose');
 /*var utils = require('./utils/utils');
 var wxApi = require('./routes/wxApi');*/
 
+var auth = require('./routes/auth');
+var city = require('./routes/city');
+var course = require('./routes/course');
 var klub = require('./routes/klub/klub');
 var wxConfig = require('./routes/wx/config');
 
 var app = express();
 
-mongoose.connect('mongodb://sign:Pengcl19821025@101.200.72.54:27017/sign', {useNewUrlParser: true});
+mongoose.connect('mongodb://sign:Pengcl19821025@101.200.72.54:27017/sign', {});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,6 +40,9 @@ app.use('/wxApi', wxApi);*/
 //微信签名认证
 /*app.use(utils.sign(config));*/
 
+app.use('/auth', auth);
+app.use('/city', city);
+app.use('/course', course);
 app.use('/wx/config', wxConfig);
 app.use('/klub', klub);
 

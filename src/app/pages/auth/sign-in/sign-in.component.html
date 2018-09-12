@@ -1,0 +1,18 @@
+<div class="content-scrollable">
+  <form class="weui-cells" [formGroup]="signInForm">
+    <div class="weui-cell">
+      <div class="weui-cell__bd">
+        <input formControlName="username" type="text" placeholder="账号" class="weui-input">
+      </div>
+    </div>
+    <div class="weui-cell">
+      <div class="weui-cell__bd">
+        <input formControlName="password" type="password" placeholder="密码" class="weui-input">
+      </div>
+    </div>
+  </form>
+
+  <div class="weui-btn-area">
+    <a (click)="submit()" class="weui-btn weui-btn_primary">确定</a>
+  </div>
+</div>

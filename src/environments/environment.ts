@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  webHost: 'http://cup.heyazl.net'
+  webHost: 'http://wx.dutyhb.com'
 };
 
 /*

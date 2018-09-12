@@ -1,0 +1,22 @@
+.weui-grids {
+  margin: 0 -0.1rem;
+  &:before, &:after {
+    display: none;
+  }
+  .weui-grid {
+    padding: 0.05rem 0.1rem;
+    &:before, &:after {
+      display: none;
+    }
+    .weui-grid__label {
+      border-radius: 0.04rem;
+      font-size: 0.13rem;
+      border: 1px solid #d8d8d8;
+      line-height: 2;
+      &.curr {
+        color: #F43530;
+        border: 1px solid #F43530;
+      }
+    }
+  }
+}

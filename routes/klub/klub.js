@@ -279,8 +279,8 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
         res.send({
           code: 9999,
           msg: '用户不存在',
-          // data: 'http://onecard.klub11.com/pass/mobile/entry?&account_id=' + Config.account_id + '&origin=' + req.body.origin + '&_redirecturl=' + encodeURIComponent(req.body._redirecturl)
-          data: 'https://app.klub11.com/?r=page/auth&account_id=' + Config.account_id + '&origin=' + req.body.origin + '&_redirecturl=' + encodeURIComponent(req.body._redirecturl)
+          data: 'http://onecard.klub11.com/pass/mobile/entry'
+          // data: 'https://app.klub11.com/?r=page/auth&account_id=' + Config.account_id + '&origin=' + req.body.origin + '&_redirecturl=' + encodeURIComponent(req.body._redirecturl)
         });
       }
     } else {
