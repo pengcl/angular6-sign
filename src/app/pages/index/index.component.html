@@ -6,14 +6,14 @@
       <div class="weui-cell__bd">
         <p>选择地区</p>
       </div>
-      <div class="weui-cell__ft">{{coursesForm.get('sid').value ? (coursesForm.get('sid').value | label : cities) : '请选择城市'}}</div>
+      <div class="weui-cell__ft">{{signForm.get('city').value ? (signForm.get('city').value | label : cities) : '请选择城市'}}</div>
     </a>
     <a (click)="showCourses()" class="weui-cell weui-cell_access">
       <div class="weui-cell__hd"><i class="icons icons-edu"></i></div>
       <div class="weui-cell__bd">
         <p>选择课程</p>
       </div>
-      <div class="weui-cell__ft">{{signForm.get('goods_id').value ? (signForm.get('goods_id').value | label : courses) : '请选择课程'}}</div>
+      <div class="weui-cell__ft">{{signForm.get('course').value ? (signForm.get('course').value | label : courses) : '请选择课程'}}</div>
     </a>
   </div>
 

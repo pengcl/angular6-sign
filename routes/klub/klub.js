@@ -136,22 +136,10 @@ router.get('/auth', function (req, res, next) {
   params['redirect_uri'] = encodeURIComponent(req.query.redirect_uri);
   params = formDataToUrl(params);
   const url = "http://api.klub11.com/v1/oauth2/authorize-base" + params;
-  console.log(url);
 
   res.location(url);
   res.statusCode = 301;
   res.end('');
-
-  /*console.log('.............url............');
-  console.log(url);
-  request({
-    url: url,
-    method: "GET"
-  }, function (error, response, body) {
-    console.log(body);
-    const data = decode(body);
-    res.send(data);
-  });*/
 });
 
 router.get('/user', function (req, res, next) {
@@ -159,47 +147,36 @@ router.get('/user', function (req, res, next) {
   params['timestamp'] = Date.parse(new Date().toString()) / 1000;
   params['interfaceId'] = Config.interfaceId;
   params['apiKey'] = Config.apiKey;
-
-  if (req.query.union_id) {
-    params['union_id'] = req.query.union_id;
-  }
-  if (req.query.mobile) {
-    params['mobile'] = req.query.mobile;
-  }
+  params['union_id'] = req.query.union_id;
   params['sign'] = signature(params);
   params = formDataToUrl(params);
 
-  let url = "";
-
-  if (req.query.union_id) {
-    url = "http://api.klub11.com/v1/external/getunionidinfo" + params;
-  }
-  if (req.query.mobile) {
-    url = "http://api.klub11.com/v1/external/getmemberinfo" + params;
-  }
-
-  console.log(url);
+  const url = "http://api.klub11.com/v1/external/getunionidinfo" + params;
 
   request({
     url: url,
     method: "GET"
   }, function (error, response, body) {
-    const data = decode(body);
+    const data = JSON.parse(decode(body));
     let result;
-    if (res.data[0]) {
-      result = {
-        code: 0,
-        msg: '获取会员信息成功',
-        data: data.data[0]
+    if (data.code === 0) {
+      if (data.data[0]) {
+        result = {
+          code: 0,
+          msg: '获取会员信息成功',
+          data: data.data[0]
+        }
+      } else {
+        result = {
+          code: 9999,
+          msg: '用户不存在',
+          data: ''
+        }
       }
+      res.send(result);
     } else {
-      result = {
-        code: 9999,
-        msg: '用户不存在',
-        data: 'https://app.klub11.com/?r=page/auth&account_id=' + Config.account_id + '&origin=7&_redirecturl=xxxxxxx'
-      }
+      res.send(data);
     }
-    res.send(data);
   });
 });
 
@@ -211,8 +188,6 @@ router.route('/getCourses').post(multipartMiddleware, function (req, res, next) 
   params['sign'] = signature(params);
   params = formDataToUrl(params);
   const url = "http://api.klub11.com/v1/goods/getrecordinfo" + params;
-
-  console.log(url);
 
   request({
     url: url,
@@ -226,7 +201,7 @@ router.route('/getCourses').post(multipartMiddleware, function (req, res, next) 
 router.route('/sign').post(multipartMiddleware, function (req, res, next) {
   var params = {};
   for (const key in req.body) {
-    if (key !== '_redirecturl' && key !== 's_name' && key !== 'goods_name') {
+    if (key !== 'city' && key !== 'course') {
       params[key] = req.body[key];
     }
   }
@@ -242,6 +217,7 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
     method: "GET"
   }, function (error, response, body) {
     const data = JSON.parse(decode(body));
+    console.log(data);
     let result;
     if (data.code === 0) {
       if (data.data[0]) {
@@ -257,10 +233,8 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
             console.log('.....用户不存在......');
             const _user = data.data[0];
             _user['sign'] = {
-              sid: req.body.sid,
-              s_name: req.body.s_name,
-              goods_id: req.body.goods_id,
-              goods_name: req.body.goods_name
+              city: req.body.city,
+              course: req.body.course
             };
             var user = new Users(_user);
             user.save((err) => {

@@ -38,10 +38,8 @@ var UsersSchema = new mongoose.Schema({
   vip_code: String,
   zip: String,
   sign: {
-    sid: Number,
-    s_name: String,
-    goods_id: Number,
-    goods_name: String
+    city: String,
+    course: String
   }
 });
 

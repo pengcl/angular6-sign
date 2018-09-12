@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {StorageService} from '../../../services/storage.service';
 import {AuthService} from '../../../services/auth.service';
 import {DialogService} from 'ngx-weui';
 
@@ -15,13 +16,14 @@ export class SignInComponent implements OnInit {
   isLoading = false;
 
   constructor(private router: Router,
+              private storageSvc: StorageService,
               private dialogSvc: DialogService,
               private authSvc: AuthService) {
   }
 
 
   ngOnInit() {
-    console.log('init');
+    this.storageSvc.clear();
     this.signInForm = new FormGroup({
       username: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(12)]),
       password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(16)])

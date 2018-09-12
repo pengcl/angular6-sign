@@ -51,8 +51,8 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  get(id, mobile) {
-    return this.http.get(Config.prefix.api + '/klub/user?union_id=' + id + '&mobile=' + mobile)
+  get(id) {
+    return this.http.get(Config.prefix.api + '/klub/user?union_id=' + id)
       .toPromise()
       .then(response => response)
       .catch(this.handleError);
