@@ -1,0 +1,118 @@
+.content-scrollable {
+  background: #a5848d;
+  .logo {
+    height: 25%;
+    position: relative;
+    img {
+      width: 36%;
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translate3d(-50%, -50%, 0);
+    }
+  }
+  .weui-cells__title {
+    font-size: 0.16rem;
+    color: #692033;
+    font-weight: bold;
+    padding-bottom: 0.05rem;
+    line-height: 1;
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      border-bottom: 1px solid #d3d5d4;
+      left: 0;
+      right: 0;
+      transform: scaleY(0.5);
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: 1px;
+      border-bottom: 1px solid #692033;
+      left: 0.15rem;
+      width: 3.5em;
+      transform: scaleY(0.5);
+    }
+  }
+  .weui-cells {
+    font-size: 0.13rem;
+    color: #652033;
+    margin: 0.2rem 0.15rem 0.15rem;
+    background: none;
+    &:before, &:after {
+      display: none;
+    }
+  }
+  .weui-cell {
+    line-height: 1;
+    border: 1px solid #d3d5d4;
+    background: #fff;
+    border-radius: 0.05rem;
+    margin-bottom: 0.15rem;
+    &:before, &:after {
+      display: none;
+    }
+    .weui-cell__hd {
+      .weui-label {
+        width: 1.05rem;
+      }
+    }
+    .weui-cell__bd {
+      text-align: center;
+      color: #c7c7c7;
+      position: relative;
+      &:before {
+        content: '';
+        position: absolute;
+        width: 0.08rem;
+        height: 0.08rem;
+        box-sizing: border-box;
+        border-left: 0.08rem solid #692033;
+        border-top: 0.04rem solid transparent;
+        border-bottom: 0.04rem solid transparent;
+        left: 0;
+        top: 50%;
+        margin-top: -0.04rem;
+      }
+      &.valid {
+        color: #652033;
+      }
+    }
+  }
+
+  .weui-btn-area {
+    position: absolute;
+    bottom: 0.3rem;
+    width: 100%;
+    margin: 0;
+  }
+
+  .weui-btn {
+    font-size: 0.16rem;
+    background-color: #692033;
+    box-shadow: 0.02rem 0.02rem 0.1rem rgba(105, 32, 51, 0.5);
+    margin: 0 0.15rem;
+    line-height: 1;
+    padding: 0.12rem 0;
+  }
+}
+
+:host ::ng-deep .mask-cells {
+  width: 1.8rem;
+  text-align: center;
+  margin: 0;
+  color: #692033;
+  .weui-cell {
+    line-height: 1;
+    padding: 0.15rem 0;
+    &:before {
+      left: 0;
+      border-top: 1px solid #692033;
+    }
+  }
+}

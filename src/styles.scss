@@ -93,3 +93,36 @@ body {
     }
   }
 }
+
+weui-dialog {
+  .weui-dialog__bd {
+    min-height: 0.4rem;
+    font-size: 0.15rem;
+    &:first-child {
+      color: #652033;
+      font-weight: bold;
+    }
+  }
+  .weui-dialog__ft {
+    margin: 0 0.1rem 0.15rem;
+    &:after {
+      display: none;
+    }
+    .weui-dialog__btn {
+      margin: 0 0.1rem;
+      border: 1px solid #652033;
+      border-radius: 0.08rem;
+      color: #652033;
+      font-size: 0.13rem;
+      line-height: 1;
+      padding: 0.08rem 0;
+      &:after {
+        display: none;
+      }
+      &.weui-dialog__btn_primary {
+        background-color: #652033;
+        color: #fff;
+      }
+    }
+  }
+}

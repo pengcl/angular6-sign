@@ -1,19 +1,21 @@
 <div class="content-scrollable">
+  <div class="logo">
+    <img src="/assets/images/logo.png">
+  </div>
+  <div class="weui-cells__title">请选择您的课程</div>
   <div class="weui-cells">
 
-    <a (click)="showCities()" class="weui-cell weui-cell_access">
-      <div class="weui-cell__hd"><i class="icons icons-address"></i></div>
-      <div class="weui-cell__bd">
-        <p>选择地区</p>
+    <a (click)="showCities()" class="weui-cell">
+      <div class="weui-cell__hd"><label class="weui-label">地区 Site</label></div>
+      <div class="weui-cell__bd" [ngClass]="{'valid':signForm.get('city').valid}">
+        <p>{{signForm.get('city').value ? (signForm.get('city').value | label : cities) : '请选择'}}</p>
       </div>
-      <div class="weui-cell__ft">{{signForm.get('city').value ? (signForm.get('city').value | label : cities) : '请选择城市'}}</div>
     </a>
     <a (click)="showCourses()" class="weui-cell weui-cell_access">
-      <div class="weui-cell__hd"><i class="icons icons-edu"></i></div>
-      <div class="weui-cell__bd">
-        <p>选择课程</p>
+      <div class="weui-cell__hd"><label class="weui-label">课程 Course</label></div>
+      <div class="weui-cell__bd" [ngClass]="{'valid':signForm.get('course').valid}">
+        <p>{{signForm.get('course').value ? (signForm.get('course').value | label : courses) : '请选择'}}</p>
       </div>
-      <div class="weui-cell__ft">{{signForm.get('course').value ? (signForm.get('course').value | label : courses) : '请选择课程'}}</div>
     </a>
   </div>
 
@@ -21,3 +23,20 @@
     <a (click)="sign()" class="weui-btn weui-btn_primary">签到</a>
   </div>
 </div>
+
+<weui-mask #mask>
+  <div *ngIf="type === 'city'" class="mask-cells weui-cells">
+    <div (click)="setCity(city)" *ngFor="let city of cities" class="weui-cell">
+      <div class="weui-cell__bd">
+        <p>{{city.label}}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="type === 'course'" class="mask-cells weui-cells">
+    <div (click)="setCourse(course)" *ngFor="let course of courses" class="weui-cell">
+      <div class="weui-cell__bd">
+        <p>{{course.label}}</p>
+      </div>
+    </div>
+  </div>
+</weui-mask>

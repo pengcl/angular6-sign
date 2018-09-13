@@ -7,6 +7,7 @@ var multipartMiddleware = multipart();
 var crypto = require('crypto');
 
 var Users = require('../../utils/db/modules/users');//导入模型数据模块
+var Signs = require('../../utils/db/modules/signs');//导入模型数据模块
 
 var Config = {
   apiKey: '993153596383692',
@@ -224,10 +225,35 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
         Users.findByUnionid(req.body.union_id, (err, user) => {
           if (user) {
             console.log('.....您已经签过到了......');
-            res.send({
-              code: 0,
-              msg: '您已经签过到了',
-              data: data.data[0]
+            Signs.findByUid(user._id, (err, signs) => {
+              let signed = false;
+
+              console.log(signs);
+
+              signs.forEach(item => {
+                if (item.course === req.body.course) {
+                  signed = true;
+                }
+              });
+
+              if (signed) {
+                res.send({
+                  code: 1,
+                  msg: '您已经签过到了',
+                  data: data.data[0]
+                });
+              } else {
+                const _sign = JSON.parse(JSON.stringify(req.body));
+                _sign.uid = user._id;
+                const sign = new Signs(_sign);
+                sign.save((err) => {
+                  res.send({
+                    code: 0,
+                    msg: '签到成功！',
+                    data: data.data[0]
+                  })
+                });
+              }
             });
           } else {
             console.log('.....用户不存在......');
@@ -239,11 +265,16 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
             var user = new Users(_user);
             user.save((err) => {
               if (!err) {
-                res.send({
-                  code: 0,
-                  msg: '签到成功！',
-                  data: data.data[0]
-                })
+                const _sign = JSON.parse(JSON.stringify(req.body));
+                _sign.uid = user._id;
+                const sign = new Signs(_sign);
+                sign.save((err) => {
+                  res.send({
+                    code: 0,
+                    msg: '签到成功！',
+                    data: data.data[0]
+                  })
+                });
               }
             });
           }
@@ -253,7 +284,7 @@ router.route('/sign').post(multipartMiddleware, function (req, res, next) {
         res.send({
           code: 9999,
           msg: '用户不存在',
-          data: 'http://onecard.klub11.com/pass/mobile/entry'
+          data: 'http://onecard.klub11.com/pass/mobile/entry' + encodeURIComponent(req.body._redirecturl)
           // data: 'https://app.klub11.com/?r=page/auth&account_id=' + Config.account_id + '&origin=' + req.body.origin + '&_redirecturl=' + encodeURIComponent(req.body._redirecturl)
         });
       }

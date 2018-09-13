@@ -9,6 +9,7 @@ export class CourseService {
   }
 
   get(id?) {
+    console.log(id);
     return this.http.get(Config.prefix.api + '/course/get' + (id ? '?id=' + id : ''))
       .toPromise()
       .then(response => response)

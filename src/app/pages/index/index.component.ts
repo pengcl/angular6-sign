@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {Config} from '../../config';
-import {ToastService, DialogService, PickerService} from 'ngx-weui';
+import {ToastService, DialogService, PickerService, MaskComponent} from 'ngx-weui';
 
 import {canSign} from '../../utils/utils';
 
@@ -21,13 +21,20 @@ export class IndexComponent implements OnInit {
   unionid;
 
   cities: any[] = [];
+  city;
 
   _courses: any[] = [];
   courses: any[] = [];
+  course;
 
   signForm: FormGroup;
 
+  type;
+
+  @ViewChild('mask') private mask: MaskComponent;
+
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private toastSvc: ToastService,
               private dialogSvc: DialogService,
               private pickerSvc: PickerService,
@@ -50,15 +57,11 @@ export class IndexComponent implements OnInit {
     if (!this.openid) {
       window.location.href = Config.prefix.api + '/klub/auth?redirect_uri=' + window.location.href;
     } else {
-      this.dialogSvc.show({
-        content: 'https://onecard.klub11.com/pass/mobile/entry?target_url=' + encodeURIComponent(window.location.href),
-        cancel: '',
-        confirm: '我知道了'
-      }).subscribe();
-      /*this.userSvc.get(this.unionid).then(res => {
+      this.userSvc.get(this.unionid).then(res => {
         if (res.code !== 0) {
           window.location.href = 'https://onecard.klub11.com/pass/mobile/entry?target_url=' + encodeURIComponent(window.location.href);
         } else {
+          console.log(res);
           this.signForm.get('openid').setValue(this.openid);
           this.signForm.get('union_id').setValue(this.unionid);
         }
@@ -81,12 +84,14 @@ export class IndexComponent implements OnInit {
         });
         this._courses = courses;
         this.courses = courses;
-      });*/
+      });
     }
   }
 
   showCities() {
-    this.pickerSvc.show([this.cities], '', [0], {cancel: '取消', confirm: '确定'}).subscribe(res => {
+    this.type = 'city';
+    this.mask.show();
+    /*this.pickerSvc.show([this.cities], '', [0], {cancel: '取消', confirm: '确定'}).subscribe(res => {
       this.signForm.get('city').setValue(res.value);
       const courses = [];
       this._courses.forEach(item => {
@@ -96,7 +101,22 @@ export class IndexComponent implements OnInit {
         this.courses = courses;
       });
       this.signForm.get('course').setValue('');
+    });*/
+  }
+
+  setCity(city) {
+    console.log(city);
+    this.signForm.get('city').setValue(city.value);
+    this.city = city;
+    this.mask.hide();
+    const courses = [];
+    this._courses.forEach(item => {
+      if (item.cities.indexOf(city.value) !== -1 && canSign(item.start, item.end)) {
+        courses.push(item);
+      }
+      this.courses = courses;
     });
+    this.signForm.get('course').setValue('');
   }
 
   showCourses() {
@@ -104,9 +124,21 @@ export class IndexComponent implements OnInit {
       this.dialogSvc.show({content: '暂无可签到课程', cancel: '', confirm: '我知道了'}).subscribe();
       return false;
     }
+    this.type = 'course';
+    this.mask.show();
+    /*if (this.courses.length === 0) {
+      this.dialogSvc.show({content: '暂无可签到课程', cancel: '', confirm: '我知道了'}).subscribe();
+      return false;
+    }
     this.pickerSvc.show([this.courses], '', [0], {cancel: '取消', confirm: '确定'}).subscribe(res => {
       this.signForm.get('course').setValue(res.value);
-    });
+    });*/
+  }
+
+  setCourse(course) {
+    this.mask.hide();
+    this.signForm.get('course').setValue(course.value);
+    this.course = course;
   }
 
   sign() {
@@ -114,19 +146,26 @@ export class IndexComponent implements OnInit {
       this.dialogSvc.show({content: '请选择地区或课程', cancel: '', confirm: '我知道了'}).subscribe();
       return false;
     }
-    this.toastSvc.loading('签到中...', 0);
-    this.userSvc.sign(this.signForm.value).then(res => {
-      this.toastSvc.hide();
-      if (res.code === 0) {
-        this.dialogSvc.show({content: res.msg, cancel: '', confirm: '我知道了'}).subscribe();
-      } else if (res.code === 9999) {
-        this.dialogSvc.show({content: res.msg, cancel: '取消', confirm: '立即注册'}).subscribe(data => {
-          if (data.value) {
-            window.location.href = res.data;
+
+    this.dialogSvc.show({content: '是否确认' + this.course.label + '签到', cancel: '否', confirm: '是'}).subscribe(data => {
+      if (data.value) {
+        this.toastSvc.loading('签到中...', 0);
+        this.userSvc.sign(this.signForm.value).then(res => {
+          this.toastSvc.hide();
+          if (res.code === 0) {
+            this.dialogSvc.show({content: res.msg, cancel: '', confirm: '我知道了'}).subscribe(_data => {
+              this.router.navigate(['/result'], {queryParams: {course: this.course.value}});
+            });
+          } else if (res.code === 9999) {
+            this.dialogSvc.show({content: res.msg, cancel: '取消', confirm: '立即注册'}).subscribe(_data => {
+              if (_data.value) {
+                window.location.href = res.data;
+              }
+            });
+          } else {
+            this.dialogSvc.show({content: res.msg, cancel: '', confirm: '我知道了'}).subscribe();
           }
         });
-      } else {
-        this.dialogSvc.show({content: res.msg, cancel: '', confirm: '我知道了'}).subscribe();
       }
     });
   }
