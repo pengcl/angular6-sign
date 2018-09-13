@@ -10,13 +10,13 @@
       <div class="weui-cell__bd">
         <p>开始时间</p>
       </div>
-      <div class="weui-cell__ft">{{coursesForm.get('start').value || '请选择开始时间'}}</div>
+      <div class="weui-cell__ft">{{coursesForm.get('start').value ? (coursesForm.get('start').value | date : 'yyyy-MM-dd HH:mm:ss') : '请选择开始时间'}}</div>
     </a>
     <a (click)="showPicker('end')" class="weui-cell weui-cell_access" href="javascript:;">
       <div class="weui-cell__bd">
         <p>结束时间</p>
       </div>
-      <div class="weui-cell__ft">{{coursesForm.get('end').value || '请选择开始时间'}}</div>
+      <div class="weui-cell__ft">{{coursesForm.get('end').value ? (coursesForm.get('end').value | date : 'yyyy-MM-dd HH:mm:ss') : '请选择结束时间'}}</div>
     </a>
   </div>
 

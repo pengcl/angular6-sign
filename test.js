@@ -25,5 +25,6 @@ function canSign(start, end) {
   if (n.m > e.m) {
     result = false;
   }
+  console.log(result);
   return result;
 }

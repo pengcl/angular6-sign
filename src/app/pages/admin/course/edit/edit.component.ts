@@ -38,16 +38,28 @@ export class AdminCourseEditComponent implements OnInit {
     this.coursesForm.get('_id').setValue(this.route.snapshot.params['id']);
 
     this.courseSvc.get(this.coursesForm.get('_id').value).then(res => {
-      console.log(res);
       if (res.success) {
         this.course = res.result;
-        console.log(this.course);
         for (const key in this.coursesForm.value) {
           if (this.course[key]) {
-            this.coursesForm.get(key).setValue(this.course[key]);
+            if (key === 'cities') {
+              let cities = '';
+              this.course[key].forEach(item => {
+                if (cities) {
+                  cities = cities + ',' + item;
+                } else {
+                  cities = item;
+                }
+              });
+              this.coursesForm.get(key).setValue(cities);
+            } else {
+              this.coursesForm.get(key).setValue(this.course[key]);
+            }
           }
         }
       }
+
+      console.log(this.coursesForm.value);
     });
 
     this.citySvc.get().then(res => {
@@ -56,8 +68,8 @@ export class AdminCourseEditComponent implements OnInit {
   }
 
   showPicker(target) {
-    this.pickerSvc.showDateTime('time').subscribe((res: any) => {
-      this.coursesForm.get(target).setValue(res.formatValue);
+    this.pickerSvc.showDateTime('datetime').subscribe((res: any) => {
+      this.coursesForm.get(target).setValue(Date.parse(res.formatValue));
     });
   }
 
@@ -89,6 +101,8 @@ export class AdminCourseEditComponent implements OnInit {
 
   submit() {
 
+    console.log(this.coursesForm.value);
+
     if (this.isLoading) {
       return false;
     }
@@ -99,7 +113,7 @@ export class AdminCourseEditComponent implements OnInit {
 
     this.isLoading = true;
 
-    this.courseSvc.add(this.coursesForm.value).then(res => {
+    this.courseSvc.edit(this.coursesForm.value).then(res => {
       this.isLoading = false;
       if (res.success) {
         this.location.back();

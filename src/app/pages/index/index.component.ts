@@ -50,7 +50,12 @@ export class IndexComponent implements OnInit {
     if (!this.openid) {
       window.location.href = Config.prefix.api + '/klub/auth?redirect_uri=' + window.location.href;
     } else {
-      this.userSvc.get(this.unionid).then(res => {
+      this.dialogSvc.show({
+        content: 'https://onecard.klub11.com/pass/mobile/entry?target_url=' + encodeURIComponent(window.location.href),
+        cancel: '',
+        confirm: '我知道了'
+      }).subscribe();
+      /*this.userSvc.get(this.unionid).then(res => {
         if (res.code !== 0) {
           window.location.href = 'https://onecard.klub11.com/pass/mobile/entry?target_url=' + encodeURIComponent(window.location.href);
         } else {
@@ -76,7 +81,7 @@ export class IndexComponent implements OnInit {
         });
         this._courses = courses;
         this.courses = courses;
-      });
+      });*/
     }
   }
 

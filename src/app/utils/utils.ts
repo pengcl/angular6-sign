@@ -63,32 +63,9 @@ export function signature(params) {
 }
 
 export function canSign(start, end) {
-  const s = {
-    h: parseInt(start.split(':')[0], 10),
-    m: parseInt(start.split(':')[1], 10)
-  };
-  const e = {
-    h: parseInt(end.split(':')[0], 10),
-    m: parseInt(end.split(':')[1], 10)
-  };
-  const now = new Date();
-  const n = {
-    h: now.getHours(),
-    m: now.getMinutes()
-  };
-  let result = true;
-  if (n.h < s.h) {
-    result = false;
-  }
-  if (n.h > e.h) {
-    result = false;
-  }
-  if (n.m < s.m) {
-    result = false;
-  }
-  if (n.m > e.m) {
-    result = false;
-  }
-  return result;
+  start = parseInt(start, 10);
+  end = parseInt(end, 10);
+  const now = parseInt(Date.parse((new Date()).toString()).toString(), 10);
+  return now > start && now < end;
 }
 

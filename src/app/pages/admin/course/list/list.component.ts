@@ -25,6 +25,15 @@ export class AdminCourseListComponent implements OnInit {
     });
   }
 
-  submit() {
+  remove(course) {
+    this.dialogSvc.show({content: '您确定要删除课程"' + course.label + '"吗？', cancel: '返回', confirm: '确定'}).subscribe(data => {
+      if (data.value) {
+        this.courseSvc.remove(course._id).then(res => {
+          if (res.success) {
+            this.courses = res.result;
+          }
+        });
+      }
+    });
   }
 }

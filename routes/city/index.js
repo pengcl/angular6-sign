@@ -32,7 +32,7 @@ router.get('/get', function (req, res, next) {
 });
 
 router.route('/add').post(function (req, res, next) {
-  if (req.body.label && req.body.value && req.body.origin) {
+  if (req.body.label) {
     Cities.findByLabel(req.body.label, (err, city) => {
       if (city) {
         res.send({
@@ -62,13 +62,33 @@ router.route('/add').post(function (req, res, next) {
 });
 
 router.route('/edit').post(function (req, res, next) {
-  if (req.body.label && req.body.value && req.body.origin) {
+  if (req.body.label) {
     Cities.findByIdAndUpdate(req.body._id, req.body, (err, city) => {
       res.send({
         success: false,
         msg: '修改成功!',
         result: ''
       })
+    });
+  } else {
+    res.send({
+      success: false,
+      msg: '缺少参数',
+      result: ''
+    });
+  }
+});
+
+router.route('/remove').post(function (req, res, next) {
+  if (req.body.id) {
+    Cities.findByIdAndRemove(req.body.id, (err, city) => {
+      Cities.findAll((err, cities) => {
+        res.send({
+          success: true,
+          msg: '删除成功',
+          result: cities
+        });
+      });
     });
   } else {
     res.send({

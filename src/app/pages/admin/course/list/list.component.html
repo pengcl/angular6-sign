@@ -1,11 +1,11 @@
 <div class="content-scrollable">
   <div class="weui-cells__title">已添加的课程</div>
   <div class="weui-cells">
-    <a *ngFor="let course of courses" [routerLink]="['/admin/course/edit',course._id]" class="weui-cell weui-cell_access">
-      <div class="weui-cell__bd">
+    <a *ngFor="let course of courses" class="weui-cell weui-cell_access">
+      <div [routerLink]="['/admin/course/edit',course._id]" class="weui-cell__bd">
         <p>{{course.label}}</p>
       </div>
-      <div class="weui-cell__ft"></div>
+      <div (click)="remove(course)" class="weui-cell__ft">删除</div>
     </a>
 
   </div>

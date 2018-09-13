@@ -1,11 +1,11 @@
 <div class="content-scrollable">
   <div class="weui-cells__title">已添加的城市</div>
   <div class="weui-cells">
-    <a *ngFor="let city of cities" [routerLink]="['/admin/city/edit',city._id]" class="weui-cell weui-cell_access">
-      <div class="weui-cell__bd">
-        <p>{{city.label}} <sub>{{city.value}}</sub></p>
+    <a *ngFor="let city of cities" class="weui-cell weui-cell_access">
+      <div [routerLink]="['/admin/city/edit',city._id]" class="weui-cell__bd">
+        <p>{{city.label}}</p>
       </div>
-      <div class="weui-cell__ft">{{city.origin}}</div>
+      <div (click)="remove(city)" class="weui-cell__ft">删除</div>
     </a>
 
   </div>

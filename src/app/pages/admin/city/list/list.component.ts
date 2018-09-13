@@ -20,14 +20,21 @@ export class AdminCityListComponent implements OnInit {
 
   ngOnInit() {
     this.citySvc.get().then(res => {
-      console.log(res);
       if (res.success) {
         this.cities = res.result;
-        console.log(this.cities);
       }
     });
   }
 
-  submit() {
+  remove(city) {
+    this.dialogSvc.show({content: '您确定要删除城市"' + city.label + '"吗？', cancel: '返回', confirm: '确定'}).subscribe(data => {
+      if (data.value) {
+        this.citySvc.remove(city._id).then(res => {
+          if (res.success) {
+            this.cities = res.result;
+          }
+        });
+      }
+    });
   }
 }

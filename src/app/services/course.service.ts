@@ -9,7 +9,6 @@ export class CourseService {
   }
 
   get(id?) {
-    console.log(Config.prefix.api + '/course/get' + (id ? '&id=' + id : ''));
     return this.http.get(Config.prefix.api + '/course/get' + (id ? '?id=' + id : ''))
       .toPromise()
       .then(response => response)
@@ -25,6 +24,13 @@ export class CourseService {
 
   edit(body) {
     return this.http.post(Config.prefix.api + '/course/edit', body)
+      .toPromise()
+      .then(response => response)
+      .catch(this.handleError);
+  }
+
+  remove(id) {
+    return this.http.post(Config.prefix.api + '/course/remove', {id: id})
       .toPromise()
       .then(response => response)
       .catch(this.handleError);

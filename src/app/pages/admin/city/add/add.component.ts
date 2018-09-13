@@ -24,8 +24,8 @@ export class AdminCityAddComponent implements OnInit {
   ngOnInit() {
     this.citiesForm = new FormGroup({
       label: new FormControl('', [Validators.required]),
-      value: new FormControl('', [Validators.required]),
-      origin: new FormControl('', [Validators.required])
+      value: new FormControl('', []),
+      origin: new FormControl('', [])
     });
   }
 

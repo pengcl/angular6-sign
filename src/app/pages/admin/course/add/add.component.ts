@@ -39,8 +39,8 @@ export class AdminCourseAddComponent implements OnInit {
   }
 
   showPicker(target) {
-    this.pickerSvc.showDateTime('time').subscribe((res: any) => {
-      this.coursesForm.get(target).setValue(res.formatValue);
+    this.pickerSvc.showDateTime('datetime').subscribe((res: any) => {
+      this.coursesForm.get(target).setValue(Date.parse(res.formatValue));
     });
   }
 

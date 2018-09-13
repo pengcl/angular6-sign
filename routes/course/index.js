@@ -32,7 +32,6 @@ router.get('/get', function (req, res, next) {
 });
 
 router.route('/add').post(function (req, res, next) {
-  console.log(req.body);
   if (req.body.label && req.body.cities && req.body.start && req.body.end) {
     req.body.cities = req.body.cities.split(',');
     Courses.findByLabel(req.body.label, (err, course) => {
@@ -64,13 +63,35 @@ router.route('/add').post(function (req, res, next) {
 });
 
 router.route('/edit').post(function (req, res, next) {
-  if (req.body.label && req.body.value && req.body.origin) {
+  if (req.body.label && req.body.cities && req.body.start && req.body.end) {
+    req.body.cities = req.body.cities.split(',');
+    console.log(req.body);
     Courses.findByIdAndUpdate(req.body._id, req.body, (err, course) => {
       res.send({
         success: false,
         msg: '修改成功!',
         result: ''
       })
+    });
+  } else {
+    res.send({
+      success: false,
+      msg: '缺少参数',
+      result: ''
+    });
+  }
+});
+
+router.route('/remove').post(function (req, res, next) {
+  if (req.body.id) {
+    Courses.findByIdAndRemove(req.body.id, (err, course) => {
+      Courses.findAll((err, courses) => {
+        res.send({
+          success: true,
+          msg: '删除成功',
+          result: courses
+        });
+      });
     });
   } else {
     res.send({
