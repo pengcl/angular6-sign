@@ -18,6 +18,10 @@
     padding-bottom: 0.05rem;
     line-height: 1;
     position: relative;
+    margin-left: 0.15rem;
+    margin-right: 0.15rem;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
     &:before {
       content: '';
       position: absolute;
@@ -34,8 +38,8 @@
       bottom: 0;
       height: 1px;
       border-bottom: 1px solid #692033;
-      left: 0.15rem;
-      width: 3.5em;
+      left: 0.1rem;
+      width: 4em;
       transform: scaleY(0.5);
     }
   }

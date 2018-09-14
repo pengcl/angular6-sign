@@ -3,6 +3,7 @@ import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../services/user.service';
 import {CityService} from '../../services/city.service';
 import {CourseService} from '../../services/course.service';
+import {SignService} from '../../services/sign.service';
 
 @Component({
   selector: 'app-admin',
@@ -15,9 +16,12 @@ export class AdminComponent implements OnInit {
 
   courses: any[] = [];
 
+  signs: any[] = [];
+
   constructor(private userSvc: UserService,
               private citySvc: CityService,
-              private courseSvc: CourseService) {
+              private courseSvc: CourseService,
+              private signSvc: SignService) {
   }
 
   ngOnInit() {
@@ -26,6 +30,10 @@ export class AdminComponent implements OnInit {
     });
     this.courseSvc.get().then(res => {
       this.courses = res.result;
+    });
+    this.signSvc.get().then(res => {
+      this.signs = res.result;
+      console.log(this.signs);
     });
   }
 }

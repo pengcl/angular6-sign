@@ -12,6 +12,7 @@ var wxApi = require('./routes/wxApi');*/
 var auth = require('./routes/auth');
 var city = require('./routes/city');
 var course = require('./routes/course');
+var sign = require('./routes/sign');
 var klub = require('./routes/klub/klub');
 var wxConfig = require('./routes/wx/config');
 
@@ -43,6 +44,7 @@ app.use('/wxApi', wxApi);*/
 app.use('/auth', auth);
 app.use('/city', city);
 app.use('/course', course);
+app.use('/sign', sign);
 app.use('/wx/config', wxConfig);
 app.use('/klub', klub);
 

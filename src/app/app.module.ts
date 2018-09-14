@@ -27,6 +27,9 @@ import {AdminCourseListComponent} from './pages/admin/course/list/list.component
 import {AdminCourseAddComponent} from './pages/admin/course/add/add.component';
 import {AdminCourseEditComponent} from './pages/admin/course/edit/edit.component';
 
+import {AdminSignListComponent} from './pages/admin/sign/list/list.component';
+import {AdminSignItemComponent} from './pages/admin/sign/item/item.component';
+
 import {AppErrorComponent} from './class/error.class';
 
 @NgModule({
@@ -43,6 +46,8 @@ import {AppErrorComponent} from './class/error.class';
     AdminCourseListComponent,
     AdminCourseAddComponent,
     AdminCourseEditComponent,
+    AdminSignListComponent,
+    AdminSignItemComponent,
     ...PIPES_DECLARATIONS,
     ...DIRECTIVES_DECLARATIONS
   ],

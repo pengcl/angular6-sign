@@ -1,0 +1,60 @@
+<div class="content-scrollable">
+  <div *ngIf="sign" class="weui-form-preview">
+    <div class="weui-form-preview__hd">
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">签到会员</label>
+        <em class="weui-form-preview__value">{{sign.user.real_name || sign.user.nick_name || sign.user.phone}}</em>
+      </div>
+    </div>
+    <div class="weui-form-preview__bd">
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">微信昵称</label>
+        <span class="weui-form-preview__value">{{sign.user.nick_name}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">性别</label>
+        <span class="weui-form-preview__value">{{sign.user.sex}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">手机号</label>
+        <span class="weui-form-preview__value">{{sign.user.phone}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">会员等级</label>
+        <span class="weui-form-preview__value">{{sign.user.level_id}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">注册地</label>
+        <span class="weui-form-preview__value">{{sign.user.reg_origin}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">签到地区</label>
+        <span class="weui-form-preview__value">{{sign.city.label}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">签到课程</label>
+        <span class="weui-form-preview__value">{{sign.course.label}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">签到时间</label>
+        <span class="weui-form-preview__value">{{sign.sign.signAt | date : 'yyyy-MM-dd HH:mm:ss'}}</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">ATELIER卡号</label>
+        <span class="weui-form-preview__value">未知</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">ATELIER楼层</label>
+        <span class="weui-form-preview__value">未知</span>
+      </div>
+      <div class="weui-form-preview__item">
+        <label class="weui-form-preview__label">ATELIER公司</label>
+        <span class="weui-form-preview__value">未知</span>
+      </div>
+    </div>
+    <div class="weui-form-preview__ft">
+      <a (click)="back()" class="weui-form-preview__btn weui-form-preview__btn_default">返回</a>
+      <a (click)="remove(sign)" class="weui-form-preview__btn weui-form-preview__btn_primary">删除</a>
+    </div>
+  </div>
+</div>

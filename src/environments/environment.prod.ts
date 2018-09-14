@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  webHost: 'http://cup.heyazl.net'
+  webHost: 'http://kaakmall-v.klub11.com'
 };
