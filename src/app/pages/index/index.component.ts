@@ -22,7 +22,6 @@ export class IndexComponent implements OnInit {
 
   cities: any[] = [];
   city;
-
   _courses: any[] = [];
   courses: any[] = [];
   course;
@@ -111,7 +110,7 @@ export class IndexComponent implements OnInit {
     this.mask.hide();
     const courses = [];
     this._courses.forEach(item => {
-      if (item.cities.indexOf(city.value) !== -1 && canSign(item.start, item.end)) {
+      if (item.city === city.label && canSign(Date.parse(item.start.replace(/\-/g, '/')), Date.parse(item.end.replace(/\-/g, '/'))) && item.isPublic) {
         courses.push(item);
       }
       this.courses = courses;

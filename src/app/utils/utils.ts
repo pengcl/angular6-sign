@@ -63,6 +63,7 @@ export function signature(params) {
 }
 
 export function canSign(start, end) {
+  console.log(start, end);
   start = parseInt(start, 10);
   end = parseInt(end, 10);
   const now = parseInt(Date.parse((new Date()).toString()).toString(), 10);
